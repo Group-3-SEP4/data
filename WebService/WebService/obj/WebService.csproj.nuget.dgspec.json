@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Rokas\\Desktop\\Sep project 4\\data\\WebService\\WebService\\WebService.csproj": {}
+    "F:\\GitHub\\data\\WebService\\WebService\\WebService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Rokas\\Desktop\\Sep project 4\\data\\WebService\\WebService\\WebService.csproj": {
+    "F:\\GitHub\\data\\WebService\\WebService\\WebService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rokas\\Desktop\\Sep project 4\\data\\WebService\\WebService\\WebService.csproj",
+        "projectUniqueName": "F:\\GitHub\\data\\WebService\\WebService\\WebService.csproj",
         "projectName": "WebService",
-        "projectPath": "C:\\Users\\Rokas\\Desktop\\Sep project 4\\data\\WebService\\WebService\\WebService.csproj",
-        "packagesPath": "C:\\Users\\Rokas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rokas\\Desktop\\Sep project 4\\data\\WebService\\WebService\\obj\\",
+        "projectPath": "F:\\GitHub\\data\\WebService\\WebService\\WebService.csproj",
+        "packagesPath": "C:\\Users\\Anders\\.nuget\\packages\\",
+        "outputPath": "F:\\GitHub\\data\\WebService\\WebService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Rokas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Anders\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -49,6 +49,10 @@
               "version": "[3.1.9, )"
             },
             "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[3.1.9, )"
             }

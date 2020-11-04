@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace WebService.Context
 {
-    public class CO2Context : DbContext
+    public class ApplicationDBContext : DbContext
     {
-        public CO2Context(DbContextOptions<CO2Reading> options) : base(options)
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
         }
 
-        public DbSet<CO2Reading> EmployeeList { get; set; }
+        public DbSet<CO2Reading> CO2ReadingsList { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CO2Reading>()
                 .HasNoKey()
-                .Property(e => e.reading)
+                .Property(e => e.Reading)
                 .IsRequired();
         }
 

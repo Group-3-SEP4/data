@@ -12,15 +12,15 @@ namespace WebService.Controllers
     [Route("api/[controller]")]
     public class CO2Controller : ControllerBase
     {
-        private CO2Context _context;
+        private ApplicationDBContext _context;
 
-        public CO2Controller(CO2Context context)
+        public CO2Controller(ApplicationDBContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public double GetCurrentCO2()
+        public int GetCurrentCO2()
         {
             var rng = new Random();
             return rng.Next(410, 1100);

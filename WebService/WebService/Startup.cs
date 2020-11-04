@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebService.Context;
 
 namespace WebService
 {
@@ -25,12 +27,11 @@ namespace WebService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddDbContext<CO2Context>(opt => opt.UseInMemoryDatabase("CO2Readings"));
+
+            var connection = Configuration.GetConnectionString("SourceDB");
+            services.AddDbContext<ApplicationDBContext>(opt => opt.UseSqlServer(connection));
             services.AddControllers();
-            services.AddDbContext<>(opt =>
-            {
-                opt.UseInMemoryDatabase("CO2List");
-                opt.UseSqlite("Data Source = database.db");
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

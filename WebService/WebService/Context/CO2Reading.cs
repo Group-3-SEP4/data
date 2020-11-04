@@ -7,11 +7,11 @@ namespace WebService.Context
 {
     public class CO2Reading
     {
-        public int reading { get; set; }
+        public int Reading { get; set; }
 
         public CO2Reading(int reading)
         {
-            this.reading = reading;
+            this.Reading = reading;
         }
     }
 }
