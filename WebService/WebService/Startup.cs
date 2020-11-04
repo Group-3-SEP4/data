@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WebService.Context;
+using WebService.Models;
 
 namespace WebService
 {
@@ -27,10 +28,8 @@ namespace WebService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<CO2Context>(opt => opt.UseInMemoryDatabase("CO2Readings"));
-
-            var connection = Configuration.GetConnectionString("SourceDB");
-            services.AddDbContext<ApplicationDBContext>(opt => opt.UseSqlServer(connection));
+            services.AddDbContext<EnviormentContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("EnvironmentDatabase")));
             services.AddControllers();
         }
 
