@@ -16,9 +16,14 @@ namespace WebService.DAO
             _context = context;
         }
 
-        public CarbonDioxideReading GetCO2ReadingValue()
+        public CarbonDioxideReading GetCO2Reading()
         {
-            return _context.CarbonDioxideReading.AsEnumerable().LastOrDefault();
+            return _context.CarbonDioxideReading.AsEnumerable().Last();
+        }
+
+        public IEnumerable<Settings> GetSettings()
+        {
+            return _context.Settings.AsEnumerable().ToList();
         }
     }
 }

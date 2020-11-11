@@ -28,13 +28,14 @@ namespace WebService.Controllers
         [HttpGet]
         public CarbonDioxideReading GetCurrentCO2()
         {
-            return _Repo.GetCO2ReadingValue();
+            return _Repo.GetCO2Reading();
         }
         
         [HttpGet("value")]
         public int GetCurrentCO2Value()
         {
-            return _Repo.GetCO2ReadingValue().Value;
+            
+            return _Repo.GetCO2Reading().Value;
         }
     } 
 }
