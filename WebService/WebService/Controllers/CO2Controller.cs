@@ -17,33 +17,24 @@ namespace WebService.Controllers
     {
         
         private EnviormentContext _context;
+        private DbRepository _Repo;
 
         public CO2Controller(EnviormentContext context)
         {
             _context = context;
+            _Repo = new DbRepository(_context);
         }
 
         [HttpGet]
-        public int GetCurrentCO2()
+        public CarbonDioxideReading GetCurrentCO2()
         {
-            DbRepository dbtest = new DbRepository(_context);
-
-            return dbtest.GetCO2ReadingValue();
-            
-            /*var rng = new Random();
-            _context.Add(new Settings {LastUpdated = DateTime.Now, TemperatureSetpoint = rng.Next(4, 30), PpmMin = rng.Next(100, 410), PpmMax = rng.Next(410, 3000) });
-            _context.SaveChanges();
-            //This is what we will need for live CO2
-            /*
-            SELECT CHARGEID, CHARGETYPE, MAX(SERVICEMONTH) AS "MostRecentServiceMonth"
-            FROM INVOICE
-            GROUP BY CHARGEID, CHARGETYPE
-            */
-            
-            //Settings setting = _context.Settings.Single(b => b.SettingsId == 1);
-            //Console.WriteLine("This is a new settings entity " + setting.SettingsId + " " + setting.LastUpdated + " " + setting.PpmMin + " " + setting.PpmMin );
-
-            //return rng.Next(410, 1100); //Replace when fully implemented 
+            return _Repo.GetCO2ReadingValue();
+        }
+        
+        [HttpGet("value")]
+        public int GetCurrentCO2Value()
+        {
+            return _Repo.GetCO2ReadingValue().Value;
         }
     } 
 }

@@ -16,10 +16,15 @@
         <e p="Controllers" t="Include">
           <e p="CO2Controller.cs" t="Include" />
         </e>
+        <e p="DAO" t="Include">
+          <e p="CO2DataAccessObject.cs" t="Include" />
+          <e p="DbRepository.cs" t="Include" />
+        </e>
         <e p="DatabaseSQL" t="Include">
           <e p="CompleteSQLCode.sql" t="Include" />
         </e>
         <e p="Models" t="Include">
+          <e p="Shared" t="Include">
             <e p="CarbonDioxideReading.cs" t="Include" />
             <e p="EnviormentContext.cs" t="Include" />
             <e p="HumidityReading.cs" t="Include" />
@@ -27,6 +32,7 @@
             <e p="Settings.cs" t="Include" />
             <e p="TemperatureReading.cs" t="Include" />
           </e>
+        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.1" t="Include">

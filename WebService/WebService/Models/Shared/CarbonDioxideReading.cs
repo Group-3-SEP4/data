@@ -9,9 +9,8 @@ namespace WebService.Models.Shared
     {
         public int CarbrId { get; set; }
         public int RoomId { get; set; }
-        public int Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
         public int Value { get; set; }
-
-        public virtual Room Room { get; set; }
+        public virtual Room Room { get; set; } //TODO: Check if needed
     }
 }
