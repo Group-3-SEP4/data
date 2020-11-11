@@ -6,11 +6,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebService.DAO;
+using WebService.Models.Shared;
 
 namespace WebService
 {
     public class Program
     {
+        
+        
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();

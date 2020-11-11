@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebService.Models
+namespace WebService.Models.Shared
 {
-    public partial class CarbonDioxideReading
+    public partial class HumidityReading
     {
-        public int CarbrId { get; set; }
+        public int HumrId { get; set; }
         public int RoomId { get; set; }
         public int Timestamp { get; set; }
         public int Value { get; set; }

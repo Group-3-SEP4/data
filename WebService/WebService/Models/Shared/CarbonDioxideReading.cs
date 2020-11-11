@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebService.Models
+namespace WebService.Models.Shared
 {
-    public partial class HumidityReading
+    [Table("CarbonDioxideReading")]
+    public partial class CarbonDioxideReading
     {
-        public int HumrId { get; set; }
+        public int CarbrId { get; set; }
         public int RoomId { get; set; }
         public int Timestamp { get; set; }
         public int Value { get; set; }

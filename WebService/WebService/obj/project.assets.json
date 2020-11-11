@@ -5721,19 +5721,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Rokas\\.nuget\\packages\\": {}
+    "C:\\Users\\krogh\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Rokas\\Desktop\\data\\WebService\\WebService\\WebService.csproj",
+      "projectUniqueName": "C:\\Users\\krogh\\Desktop\\SEP4 Source Code\\Data\\WebService\\WebService\\WebService.csproj",
       "projectName": "WebService",
-      "projectPath": "C:\\Users\\Rokas\\Desktop\\data\\WebService\\WebService\\WebService.csproj",
-      "packagesPath": "C:\\Users\\Rokas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Rokas\\Desktop\\data\\WebService\\WebService\\obj\\",
+      "projectPath": "C:\\Users\\krogh\\Desktop\\SEP4 Source Code\\Data\\WebService\\WebService\\WebService.csproj",
+      "packagesPath": "C:\\Users\\krogh\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\krogh\\Desktop\\SEP4 Source Code\\Data\\WebService\\WebService\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Rokas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\krogh\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5790,7 +5790,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebService.Models
+namespace WebService.Models.Shared
 {
     public partial class TemperatureReading
     {
