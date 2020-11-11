@@ -4,7 +4,8 @@
 # https://aka.ms/yaml
 
 trigger:
-- feature/WebService_with_Database_connection
+- master
+- feature/*
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -12,8 +13,13 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: 'data/WebService/WebService/WebService.csproj'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+
