@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace WebService.Models
+namespace WebService.Models.Shared
 {
     public partial class EnviormentContext : DbContext
     {

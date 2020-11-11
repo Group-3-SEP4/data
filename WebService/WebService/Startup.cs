@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WebService.Context;
 using WebService.Models;
+using WebService.Models.Shared;
 
 namespace WebService
 {
