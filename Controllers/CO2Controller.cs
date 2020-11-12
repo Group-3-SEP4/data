@@ -12,7 +12,7 @@ using WebService.Models.Shared;
 namespace WebService.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class CO2Controller : ControllerBase
     {
         
