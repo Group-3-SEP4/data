@@ -6,15 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebService.Controllers
 {
+    /// <summary>
+    /// Controller responsible for testing. Currently has only 1 GET method
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class TestController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
 
+        /// <summary>
+        /// This method is for testing purposes. Must return "IT WORKS"
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public string GetTest()
         {

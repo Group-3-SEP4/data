@@ -5,6 +5,9 @@ using WebService.Models.Shared;
 
 namespace WebService.Controllers
 {
+    /// <summary>
+    /// This is the controller for settings which holds get and post methods.
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     
@@ -18,7 +21,10 @@ namespace WebService.Controllers
             _context = context;
             _Repo = new DbRepository(_context);
         }
-
+        /// <summary>
+        /// This a method to get all the settings
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<Settings> GetSettings()
         {
