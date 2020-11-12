@@ -6,7 +6,7 @@ using WebService.Models.Shared;
 namespace WebService.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     
     public class SettingsController : Controller
     {
