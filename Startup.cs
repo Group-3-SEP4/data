@@ -1,19 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using WebService.Context;
-using WebService.DAO;
-using WebService.Models;
 using WebService.Models.Shared;
 
 namespace WebService
@@ -38,8 +28,8 @@ namespace WebService
                 options.SwaggerDoc("v1",
                     new Microsoft.OpenApi.Models.OpenApiInfo
                     {
-                        Title = "Swagger API",
-                        Description = "API for showing Swagger",
+                        Title = "Sleep Monitoring API",
+                        Description = "API for showing information related to the sleep monitoring system",
                         Version = "v1"
                     });
             });
@@ -70,7 +60,7 @@ namespace WebService
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("v1/swagger.json", "MyAPI V1");
+                c.SwaggerEndpoint("v1/swagger.json", "Sleep monitoring V1");
             });
         }
     }
