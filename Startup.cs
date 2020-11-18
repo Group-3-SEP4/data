@@ -20,6 +20,9 @@ namespace WebService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Script for generating again after changing database 
+            //Scaffold-DbContext "Server=tcp:enviorment-server.database.windows.net,1433;Initial Catalog=EnviormentDatabase;Persist Security Info=False;User ID=rokasbarasa1;Password=Augis123*;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context EnviormentContext
+
             services.AddDbContext<EnviormentContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EnvironmentDatabase")));
             services.AddControllers();
