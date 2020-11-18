@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebService.Models.Shared
+namespace WebService.Models
 {
     [Table("CarbonDioxideReading")]
     public partial class CarbonDioxideReading

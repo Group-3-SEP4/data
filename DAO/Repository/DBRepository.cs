@@ -1,17 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.Linq;
-using WebService.Context;
-using WebService.Models.Shared;
+using WebService.DAO.Context;
+using WebService.Models;
 
-namespace WebService.DAO
+namespace WebService.DAO.Repository
 {
-    public class DbRepository
+    public class DBRepository : IDBRepository
     {
-        private readonly EnviormentContext _context;
+        private EnvironmentContext _context;
 
-        public DbRepository(EnviormentContext context)
+        public DBRepository(EnvironmentContext context)
         {
             _context = context;
         }
