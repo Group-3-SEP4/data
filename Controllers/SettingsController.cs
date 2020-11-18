@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using WebService.DAO;
-using WebService.DAO.Context;
 using WebService.DAO.Repository;
 using WebService.Models;
+
 
 namespace WebService.Controllers
 {

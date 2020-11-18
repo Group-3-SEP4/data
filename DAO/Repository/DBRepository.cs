@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using WebService.DAO.Context;
 using WebService.Models;
 
 namespace WebService.DAO.Repository
@@ -14,9 +14,9 @@ namespace WebService.DAO.Repository
             _context = context;
         }
 
-        public CarbonDioxideReading GetCO2Reading()
+        public int GetCO2Reading()
         {
-            return _context.CarbonDioxideReading.AsEnumerable().Last();
+            return _context.Measurement.AsEnumerable().Last().CarbonDioxide;
         }
 
         public IEnumerable<Settings> GetSettings()

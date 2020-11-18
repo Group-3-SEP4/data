@@ -8,7 +8,7 @@ namespace WebService.DAO.Repository
 {
     public interface IDBRepository
     {
-        public CarbonDioxideReading GetCO2Reading();
+        public int GetCO2Reading();
         public IEnumerable<Settings> GetSettings();
     }
 }

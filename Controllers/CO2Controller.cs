@@ -23,7 +23,7 @@ namespace WebService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public CarbonDioxideReading GetCurrentCO2()
+        public int GetCurrentCO2()
         {
             return _repo.GetCO2Reading();
         }
@@ -35,7 +35,7 @@ namespace WebService.Controllers
         [HttpGet("value")]
         public int GetCurrentCO2Value()
         {
-            return _repo.GetCO2Reading().Value;
+            return _repo.GetCO2Reading();
         }
     }
 }

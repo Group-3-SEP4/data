@@ -5,9 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebService.DAO;
-using WebService.DAO.Context;
 using WebService.DAO.Repository;
-using WebService.Models;
 
 namespace WebService
 {
