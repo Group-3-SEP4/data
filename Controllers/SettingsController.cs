@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using WebService.DAO;
-using WebService.Models.Shared;
+using WebService.DAO.Context;
+using WebService.DAO.Repository;
+using WebService.Models;
 
 namespace WebService.Controllers
 {
@@ -13,13 +15,11 @@ namespace WebService.Controllers
     
     public class SettingsController : Controller
     {
-        private EnviormentContext _context;
-        private DbRepository _Repo;
+        private readonly IDBRepository _repo;
 
-        public SettingsController(EnviormentContext context)
+        public SettingsController(IDBRepository repo)
         {
-            _context = context;
-            _Repo = new DbRepository(_context);
+            _repo = repo;
         }
         /// <summary>
         /// This a method to get all the settings
@@ -28,7 +28,7 @@ namespace WebService.Controllers
         [HttpGet]
         public IEnumerable<Settings> GetSettings()
         {
-            return _Repo.GetSettings();
+            return _repo.GetSettings();
         }
     }
 }

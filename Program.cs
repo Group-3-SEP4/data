@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WebService.DAO;
-using WebService.Models.Shared;
 
 namespace WebService
 {

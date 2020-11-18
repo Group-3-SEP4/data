@@ -1,16 +1,15 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using WebService.Models;
 
-namespace WebService.Models.Shared
+namespace WebService.DAO.Context
 {
-    public partial class EnviormentContext : DbContext
+    public partial class EnvironmentContext : DbContext
     {
-        public EnviormentContext()
+        public EnvironmentContext()
         {
         }
 
-        public EnviormentContext(DbContextOptions<EnviormentContext> options)
+        public EnvironmentContext(DbContextOptions<EnvironmentContext> options)
             : base(options)
         {
         }

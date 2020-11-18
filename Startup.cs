@@ -4,7 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebService.Models.Shared;
+using WebService.DAO;
+using WebService.DAO.Context;
+using WebService.DAO.Repository;
+using WebService.Models;
 
 namespace WebService
 {
@@ -13,6 +16,9 @@ namespace WebService
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            //Script for entityFramework
+            //Scaffold-DbContext "Server=tcp:enviorment-server.database.windows.net,1433;Initial Catalog=EnviormentDatabase;Persist Security Info=False;User ID=rokasbarasa1;Password=Augis123*;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context EnviormentContext
+
         }
 
         public IConfiguration Configuration { get; }
@@ -20,12 +26,10 @@ namespace WebService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Script for generating again after changing database 
-            //Scaffold-DbContext "Server=tcp:enviorment-server.database.windows.net,1433;Initial Catalog=EnviormentDatabase;Persist Security Info=False;User ID=rokasbarasa1;Password=Augis123*;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context EnviormentContext
-
-            services.AddDbContext<EnviormentContext>(options =>
+            services.AddDbContext<EnvironmentContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EnvironmentDatabase")));
             services.AddControllers();
+            services.AddScoped<IDBRepository, DBRepository>();
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1",

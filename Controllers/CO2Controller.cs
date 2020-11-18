@@ -1,31 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using WebService.Context;
-using WebService.DAO;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebService.DAO.Repository;
 using WebService.Models;
-using WebService.Models.Shared;
 
 namespace WebService.Controllers
 {
     /// <summary>
-    /// This is the controller for getting or posting data related to co2. It has 2 get methods currently
+    /// This is the controller for getting or posting data related to co2. It has 2 get methods currently.
     /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class CO2Controller : ControllerBase
     {
-        
-        private EnviormentContext _context;
-        private DbRepository _Repo;
+        private readonly IDBRepository _repo;
 
-        public CO2Controller(EnviormentContext context)
+        public CO2Controller(IDBRepository repo)
         {
-            _context = context;
-            _Repo = new DbRepository(_context);
+            _repo = repo;
         }
 
         /// <summary>
@@ -35,18 +25,17 @@ namespace WebService.Controllers
         [HttpGet]
         public CarbonDioxideReading GetCurrentCO2()
         {
-            return _Repo.GetCO2Reading();
+            return _repo.GetCO2Reading();
         }
         
         /// <summary>
-        /// This method gets a specific value of co2 or whatever. I didnt write this
+        /// This method gets a specific value of CO2. I didn't write this
         /// </summary>
         /// <returns></returns>
         [HttpGet("value")]
         public int GetCurrentCO2Value()
         {
-            
-            return _Repo.GetCO2Reading().Value;
+            return _repo.GetCO2Reading().Value;
         }
-    } 
+    }
 }
