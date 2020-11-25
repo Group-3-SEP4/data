@@ -9,7 +9,7 @@ namespace WebService.DAO.Repository
     public interface IDbRepository
     {
         public int GetCo2Reading();
-        public IEnumerable<Settings> GetSettings();
+        public Settings GetSettings();
         Settings PostSettings(Settings settings);
     }
 }

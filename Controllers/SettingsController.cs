@@ -25,7 +25,7 @@ namespace WebService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IEnumerable<Settings> GetSettings()
+        public Settings GetSettings()
         {
             return _repo.GetSettings();
         }

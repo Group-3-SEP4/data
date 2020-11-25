@@ -20,9 +20,9 @@ namespace WebService.DAO.Repository
             return _context.Measurement.AsEnumerable().Last().CarbonDioxide;
         }
 
-        public IEnumerable<Settings> GetSettings()
+        public Settings GetSettings()
         {
-            return _context.Settings.AsEnumerable().ToList();
+            return _context.Settings.AsEnumerable().Last();
         }
 
         public Settings PostSettings(Settings settings)
