@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace WebService.Models
 {
@@ -11,6 +10,6 @@ namespace WebService.Models
         public int CarbonDioxide { get; set; }
         public double Temperature { get; set; }
         public int ServoPositionPercentage { get; set; }
-        public string DeviceId { get; set; }
+        public string deviceId { get; set; }
     }
 }

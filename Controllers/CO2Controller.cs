@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebService.DAO.Repository;
-using WebService.Models;
 
 namespace WebService.Controllers
 {
@@ -11,9 +10,9 @@ namespace WebService.Controllers
     [Route("[controller]")]
     public class CO2Controller : ControllerBase
     {
-        private readonly IDBRepository _repo;
+        private readonly IDbRepository _repo;
 
-        public CO2Controller(IDBRepository repo)
+        public CO2Controller(IDbRepository repo)
         {
             _repo = repo;
         }
@@ -25,7 +24,7 @@ namespace WebService.Controllers
         [HttpGet]
         public int GetCurrentCO2()
         {
-            return _repo.GetCO2Reading();
+            return _repo.GetCo2Reading();
         }
         
         /// <summary>
@@ -35,7 +34,7 @@ namespace WebService.Controllers
         [HttpGet("value")]
         public int GetCurrentCO2Value()
         {
-            return _repo.GetCO2Reading();
+            return _repo.GetCo2Reading();
         }
     }
 }

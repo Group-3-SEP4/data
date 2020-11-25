@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebService.DAO;
+using WebService.DAO.Context;
 using WebService.DAO.Repository;
 
 namespace WebService
@@ -21,13 +22,12 @@ namespace WebService
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<EnvironmentContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EnvironmentDatabase")));
             services.AddControllers();
-            services.AddScoped<IDBRepository, DBRepository>();
+            services.AddScoped<IDbRepository, DbRepository>();
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1",
@@ -40,7 +40,6 @@ namespace WebService
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -65,7 +64,7 @@ namespace WebService
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("v1/swagger.json", "Sleep monitoring V1");
+                c.SwaggerEndpoint("v1/swagger.json", "Sleep monitoring");
             });
         }
     }

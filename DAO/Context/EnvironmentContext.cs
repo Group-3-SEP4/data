@@ -1,9 +1,7 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using WebService.Models;
 
-namespace WebService.DAO
+namespace WebService.DAO.Context
 {
     public partial class EnvironmentContext : DbContext
     {
@@ -32,9 +30,9 @@ namespace WebService.DAO
         {
             modelBuilder.Entity<Measurement>(entity =>
             {
-                entity.HasKey(e => new { e.DeviceId, e.MeasurementId });
+                entity.HasKey(e => new { DeviceEui = e.deviceId, e.MeasurementId });
 
-                entity.Property(e => e.DeviceId)
+                entity.Property(e => e.deviceId)
                     .HasColumnName("deviceId")
                     .HasMaxLength(16);
 
@@ -65,6 +63,11 @@ namespace WebService.DAO
                     .HasMaxLength(50);
 
                 entity.Property(e => e.SettingsId).HasColumnName("settingsId");
+                
+                entity.Property(e => e.DeviceEui)
+                    .IsRequired()
+                    .HasColumnName("deviceEUI")
+                    .HasMaxLength(16);
 
                 entity.HasOne(d => d.Settings)
                     .WithMany(p => p.Room)

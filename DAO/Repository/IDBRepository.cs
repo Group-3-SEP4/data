@@ -6,9 +6,10 @@ using WebService.Models;
 
 namespace WebService.DAO.Repository
 {
-    public interface IDBRepository
+    public interface IDbRepository
     {
-        public int GetCO2Reading();
+        public int GetCo2Reading();
         public IEnumerable<Settings> GetSettings();
+        Settings PostSettings(Settings settings);
     }
 }

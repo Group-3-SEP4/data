@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using WebService.DAO;
 using WebService.DAO.Repository;
 using WebService.Models;
 
@@ -15,9 +14,9 @@ namespace WebService.Controllers
     
     public class SettingsController : Controller
     {
-        private readonly IDBRepository _repo;
+        private readonly IDbRepository _repo;
 
-        public SettingsController(IDBRepository repo)
+        public SettingsController(IDbRepository repo)
         {
             _repo = repo;
         }
@@ -29,6 +28,16 @@ namespace WebService.Controllers
         public IEnumerable<Settings> GetSettings()
         {
             return _repo.GetSettings();
+        }
+        
+        /// <summary>
+        /// This a method to post the changed settings. Returns the posted settings afterwards
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public Settings PostSettings(Settings settings)
+        {
+            return _repo.PostSettings(settings);
         }
     }
 }

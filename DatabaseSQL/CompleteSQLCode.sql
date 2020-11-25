@@ -1,3 +1,6 @@
+--**************************************************************************
+--SOURCE DATABASE
+--**************************************************************************
 USE [EnviormentDatabase]
 GO
 USE [OP_EnviornmentMonitoring]
@@ -32,6 +35,7 @@ CREATE TABLE [dbo].[Room](
 	[roomId] [int] IDENTITY(1,1) NOT NULL,
 	[settingsId] [int] NOT NULL,
 	[name] [nvarchar](50) NOT NULL,
+    [deviceEUI] [nvarchar](16) NOT NULL,
 	CONSTRAINT [PK_Room] PRIMARY KEY CLUSTERED ([roomId] ASC)
 ) ON [PRIMARY]
 GO
@@ -45,8 +49,8 @@ GO
 
 insert into dbo.Measurement (timestamp, humidityPercentage, carbonDioxide, temperature, servoPositionPercentage, deviceId)
 values ('2020-08-23', 52, 534, 18, 0, 0)
-/*
 
+/*
 DROP TABLE IF EXISTS [EnviormentDatabase].dbo.SystemUser
 CREATE TABLE [dbo].[SystemUser](
 	[userId] [int] IDENTITY(1,1) NOT NULL,
@@ -67,3 +71,15 @@ GO
 ALTER TABLE [dbo].[SystemUser] CHECK CONSTRAINT [FK_User_Settings]
 GO
 */
+
+--**************************************************************************
+--STAGING DATABASE
+--**************************************************************************
+
+
+
+
+
+--**************************************************************************
+--DATA WAREHOUSE
+--**************************************************************************
