@@ -26,15 +26,5 @@ namespace WebService.Controllers
         {
             return _repo.GetCo2Reading();
         }
-        
-        /// <summary>
-        /// This method gets a specific value of CO2. I didn't write this
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("value")]
-        public int GetCurrentCO2Value()
-        {
-            return _repo.GetCo2Reading();
-        }
     }
 }
