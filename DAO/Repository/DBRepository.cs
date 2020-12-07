@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using WebService.DAO.Context;
 using WebService.Models;
 
 namespace WebService.DAO.Repository
@@ -19,17 +20,17 @@ namespace WebService.DAO.Repository
             this.temperatureSetPoint = 18;
         }
 
-        public Measurement GetMeasurement(string deviceId) {
-            return _context.Measurement.AsEnumerable().Where(m => m.DeviceId.Equals(deviceId)).Last();
+        public Measurement GetMeasurement(string deviceEUI) {
+            return _context.Measurement.AsEnumerable().Where(m => m.DeviceEui.Equals(deviceEUI)).Last();
         }
 
-        public Settings GetSettings(string deviceId) {
-            Room roomWithId = _context.Room.Where(m => m.DeviceEui.Equals(deviceId)).Single();
+        public Settings GetSettings(string deviceEUI) {
+            Room roomWithId = _context.Room.Where(m => m.DeviceEui.Equals(deviceEUI)).Single();
             Settings settings = _context.Settings.Find(roomWithId.SettingsId);
             return settings;
         }
 
-        public Settings PostSettings(Settings settings, string deviceId) {
+        public Settings PostSettings(Settings settings) {
             var entity = _context.Settings.FirstOrDefault(item => item.SettingsId == settings.SettingsId);
 
             if (entity != null)
@@ -39,7 +40,7 @@ namespace WebService.DAO.Repository
                 entity.TemperatureSetpoint = settings.TemperatureSetpoint;
                 entity.LastUpdated = DateTime.Now;
                 entity.SettingsId = settings.SettingsId;
-                entity.SentToDevice = new DateTime(1754, 1, 1, 1, 1, 1);
+                entity.SentToDevice = null;
                 _context.Settings.Update(entity);
                 _context.SaveChanges();
             }
@@ -47,11 +48,11 @@ namespace WebService.DAO.Repository
             return student;
         }
 
-        public bool InitRoom(string deviceId) {
+        public bool InitRoom(string deviceEUI) {
             Room roomForDevice = null;
             try
             {
-                roomForDevice = _context.Room.AsEnumerable().Where(r => r.DeviceEui.Equals(deviceId)).Last();
+                roomForDevice = _context.Room.AsEnumerable().Where(r => r.DeviceEui.Equals(deviceEUI)).Last();
             }
             catch (InvalidOperationException e)
             {
@@ -70,7 +71,7 @@ namespace WebService.DAO.Repository
                 _context.SaveChanges();
 
                 Room newRoom = new Room();
-                newRoom.DeviceEui = deviceId;
+                newRoom.DeviceEui = deviceEUI;
                 newRoom.Name = "New device";
                 newRoom.SettingsId = newSettings.SettingsId;
                 _context.Room.Add(newRoom);
@@ -79,9 +80,9 @@ namespace WebService.DAO.Repository
             }
         }
 
-        public Room GetRoom(string deviceId)
+        public Room GetRoom(string deviceEUI)
         {
-            return _context.Room.Where(room => room.DeviceEui.Equals(deviceId)).Single();
+            return _context.Room.Where(room => room.DeviceEui.Equals(deviceEUI)).Single();
         }
     }
 }
