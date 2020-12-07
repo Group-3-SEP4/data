@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebService.DAO;
-using WebService.DAO.Context;
+
 using WebService.DAO.Repository;
+using WebService.Models;
 
 namespace WebService
 {
@@ -15,7 +15,9 @@ namespace WebService
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            //Script for entityFramework
+            //Script for entityFramework 
+            //Go to tools -> nuget packagee manager -> package manager console
+            //Project must be built
             //Scaffold-DbContext "Server=tcp:enviorment-server.database.windows.net,1433;Initial Catalog=EnviormentDatabase;Persist Security Info=False;User ID=rokasbarasa1;Password=Augis123*;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context EnviormentContext
 
         }
@@ -24,18 +26,21 @@ namespace WebService
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<EnvironmentContext>(options =>
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+            services.AddDbContext<EnviormentContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EnvironmentDatabase")));
             services.AddControllers();
             services.AddScoped<IDbRepository, DbRepository>();
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1",
+                options.SwaggerDoc("v2",
                     new Microsoft.OpenApi.Models.OpenApiInfo
                     {
                         Title = "Sleep Monitoring API",
                         Description = "API for showing information related to the sleep monitoring system",
-                        Version = "v1"
+                        Version = "v2"
                     });
             });
         }
@@ -64,7 +69,7 @@ namespace WebService
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("v1/swagger.json", "Sleep monitoring");
+                c.SwaggerEndpoint("v2/swagger.json", "Sleep monitoring");
             });
         }
     }

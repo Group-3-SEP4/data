@@ -8,8 +8,10 @@ namespace WebService.DAO.Repository
 {
     public interface IDbRepository
     {
-        public int GetCo2Reading();
-        public Settings GetSettings();
-        Settings PostSettings(Settings settings);
+        public Measurement GetMeasurement(string deviceId);
+        public Settings GetSettings(string deviceId);
+        Settings PostSettings(Settings settings, string deviceId);
+        bool InitRoom(string deviceId);
+        Room GetRoom(string deviceId);
     }
 }

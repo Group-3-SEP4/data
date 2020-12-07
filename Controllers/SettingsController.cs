@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebService.DAO.Repository;
 using WebService.Models;
 
@@ -16,28 +15,30 @@ namespace WebService.Controllers
     {
         private readonly IDbRepository _repo;
 
-        public SettingsController(IDbRepository repo)
-        {
+        public SettingsController(IDbRepository repo) {
             _repo = repo;
         }
+        
         /// <summary>
-        /// This a method to get all the settings
+        /// This a method to get all the settings. You send the device id to request settings for that device.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="deviceId"></param>
+        /// <returns>Returns settings that you requested</returns>
         [HttpGet]
-        public Settings GetSettings()
-        {
-            return _repo.GetSettings();
+        public Settings GetSettings([FromQuery(Name = "deviceId")] string deviceId) {
+            Settings settings = _repo.GetSettings(deviceId);
+            return settings;
         }
         
         /// <summary>
         /// This a method to post the changed settings. Returns the posted settings afterwards
         /// </summary>
-        /// <returns></returns>
+        /// <param name="deviceId"></param>
+        /// <param name="settings"></param>
+        /// <returns>Returns a settings entity that you sent, to confirm that it was updated</returns>
         [HttpPost]
-        public Settings PostSettings(Settings settings)
-        {
-            return _repo.PostSettings(settings);
+        public Settings PostSettings([FromQuery(Name = "deviceId")] string deviceId, Settings settings) {
+            return _repo.PostSettings(settings, deviceId);
         }
     }
 }

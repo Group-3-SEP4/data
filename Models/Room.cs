@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 
 namespace WebService.Models
 {
@@ -8,6 +9,5 @@ namespace WebService.Models
         public int SettingsId { get; set; }
         public string Name { get; set; }
         public string DeviceEui { get; set; }
-        public virtual Settings Settings { get; set; }
     }
 }

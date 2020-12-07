@@ -1,15 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebService.Models;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace WebService.DAO.Context
+namespace WebService.Models
 {
-    public partial class EnvironmentContext : DbContext
+    public partial class EnviormentContext : DbContext
     {
-        public EnvironmentContext()
+        public EnviormentContext()
         {
         }
 
-        public EnvironmentContext(DbContextOptions<EnvironmentContext> options)
+        public EnviormentContext(DbContextOptions<EnviormentContext> options)
             : base(options)
         {
         }
@@ -30,17 +31,14 @@ namespace WebService.DAO.Context
         {
             modelBuilder.Entity<Measurement>(entity =>
             {
-                entity.HasKey(e => new { DeviceEui = e.deviceId, e.MeasurementId });
-
-                entity.Property(e => e.deviceId)
-                    .HasColumnName("deviceId")
-                    .HasMaxLength(16);
-
-                entity.Property(e => e.MeasurementId)
-                    .HasColumnName("measurementId")
-                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.MeasurementId).HasColumnName("measurementId");
 
                 entity.Property(e => e.CarbonDioxide).HasColumnName("carbonDioxide");
+
+                entity.Property(e => e.DeviceId)
+                    .IsRequired()
+                    .HasColumnName("deviceId")
+                    .HasMaxLength(16);
 
                 entity.Property(e => e.HumidityPercentage).HasColumnName("humidityPercentage");
 
@@ -55,7 +53,20 @@ namespace WebService.DAO.Context
 
             modelBuilder.Entity<Room>(entity =>
             {
+                entity.HasIndex(e => e.DeviceEui)
+                    .HasName("UQ__Room__2E2915B3732B3DFA")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.SettingsId)
+                    .HasName("UQ__Room__2DA7B9B3B0D367AD")
+                    .IsUnique();
+
                 entity.Property(e => e.RoomId).HasColumnName("roomId");
+
+                entity.Property(e => e.DeviceEui)
+                    .IsRequired()
+                    .HasColumnName("deviceEUI")
+                    .HasMaxLength(16);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -63,17 +74,6 @@ namespace WebService.DAO.Context
                     .HasMaxLength(50);
 
                 entity.Property(e => e.SettingsId).HasColumnName("settingsId");
-                
-                entity.Property(e => e.DeviceEui)
-                    .IsRequired()
-                    .HasColumnName("deviceEUI")
-                    .HasMaxLength(16);
-
-                entity.HasOne(d => d.Settings)
-                    .WithMany(p => p.Room)
-                    .HasForeignKey(d => d.SettingsId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Room_Settings");
             });
 
             modelBuilder.Entity<Settings>(entity =>
@@ -87,6 +87,10 @@ namespace WebService.DAO.Context
                 entity.Property(e => e.PpmMax).HasColumnName("ppmMax");
 
                 entity.Property(e => e.PpmMin).HasColumnName("ppmMin");
+
+                entity.Property(e => e.SentToDevice)
+                    .HasColumnName("sentToDevice")
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.TemperatureSetpoint).HasColumnName("temperatureSetpoint");
             });
