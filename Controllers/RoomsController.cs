@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebService.DAO.Repository;
-using WebService.Models;
+using WebService.Repository;
+using WebService.Repository.Context;
 
 namespace WebService.Controllers
 {
@@ -9,10 +9,10 @@ namespace WebService.Controllers
     /// </summary>
     [ApiController]
     [Route("[controller]")]
-    public class RoomController : Controller {
+    public class RoomsController : Controller {
         private readonly IDbRepository _repo;
 
-        public RoomController(IDbRepository repo) {
+        public RoomsController(IDbRepository repo) {
             _repo = repo;
         }
         

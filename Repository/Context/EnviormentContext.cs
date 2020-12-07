@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebService.Models;
 
-namespace WebService.DAO.Context
+namespace WebService.Repository.Context
 {
     public partial class EnviormentContext : DbContext
     {

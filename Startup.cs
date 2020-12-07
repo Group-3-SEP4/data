@@ -4,9 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebService.DAO.Context;
-using WebService.DAO.Repository;
-using WebService.Models;
+using WebService.Repository;
+using WebService.Repository.Context;
 
 namespace WebService
 {

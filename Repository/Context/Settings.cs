@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace WebService.Models
+namespace WebService.Repository.Context
 {
     public partial class Settings
     {

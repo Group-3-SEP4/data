@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebService.DAO.Repository;
-using WebService.Models;
+using WebService.Repository;
+using WebService.Repository.Context;
 
 
 namespace WebService.Controllers
