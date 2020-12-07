@@ -9,9 +9,7 @@ namespace WebService.Controllers
     /// </summary>
     [ApiController]
     [Route("[controller]")]
-    public class RoomController : Controller
-    {
-        
+    public class RoomController : Controller {
         private readonly IDbRepository _repo;
 
         public RoomController(IDbRepository repo) {
@@ -21,21 +19,21 @@ namespace WebService.Controllers
         /// <summary>
         /// This is a method to initialize the room for a newly added device, will return true. If the device was already added it will send false
         /// </summary>
-        /// <param name="deviceId"></param>
+        /// <param name="deviceEUI"></param>
         /// <returns>Returns either a true if it was initialyzed or false if it is already there</returns>
         [HttpPost]
-        public bool InitRoom([FromQuery(Name = "deviceId")] string deviceId) {
-            return _repo.InitRoom(deviceId);
+        public bool InitRoom([FromQuery(Name = "deviceEUI")] string deviceEUI) {
+            return _repo.InitRoom(deviceEUI);
         }
         
         /// <summary>
         /// This is a method to get the room entity with a specific deviceID.
         /// </summary>
-        /// <param name="deviceId"></param>
+        /// <param name="deviceEUI"></param>
         /// <returns>Returns an entity of room that was requested</returns>
         [HttpGet]
-        public Room GetRoom([FromQuery(Name = "deviceId")] string deviceId) {
-            return _repo.GetRoom(deviceId);
+        public Room GetRoom([FromQuery(Name = "deviceEUI")] string deviceEUI) {
+            return _repo.GetRoom(deviceEUI);
         }
     }
 }

@@ -11,8 +11,7 @@ namespace WebService.Controllers
     [ApiController]
     [Route("[controller]")]
     
-    public class SettingsController : Controller
-    {
+    public class SettingsController : Controller {
         private readonly IDbRepository _repo;
 
         public SettingsController(IDbRepository repo) {
@@ -22,23 +21,22 @@ namespace WebService.Controllers
         /// <summary>
         /// This a method to get all the settings. You send the device id to request settings for that device.
         /// </summary>
-        /// <param name="deviceId"></param>
+        /// <param name="deviceEUI"></param>
         /// <returns>Returns settings that you requested</returns>
         [HttpGet]
-        public Settings GetSettings([FromQuery(Name = "deviceId")] string deviceId) {
-            Settings settings = _repo.GetSettings(deviceId);
-            return settings;
+        public Settings GetSettings([FromQuery(Name = "deviceEUI")] string deviceEUI) {
+            return _repo.GetSettings(deviceEUI);
+            
         }
         
         /// <summary>
         /// This a method to post the changed settings. Returns the posted settings afterwards
         /// </summary>
-        /// <param name="deviceId"></param>
         /// <param name="settings"></param>
         /// <returns>Returns a settings entity that you sent, to confirm that it was updated</returns>
         [HttpPost]
-        public Settings PostSettings([FromQuery(Name = "deviceId")] string deviceId, Settings settings) {
-            return _repo.PostSettings(settings, deviceId);
+        public Settings PostSettings(Settings settings) {
+            return _repo.PostSettings(settings);
         }
     }
 }

@@ -1,19 +1,13 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using WebService.Models;
 
-namespace WebService.Models
+namespace WebService.DAO.Context
 {
     public partial class EnviormentContext : DbContext
     {
-        public EnviormentContext()
-        {
-        }
+        public EnviormentContext() { }
 
-        public EnviormentContext(DbContextOptions<EnviormentContext> options)
-            : base(options)
-        {
-        }
+        public EnviormentContext(DbContextOptions<EnviormentContext> options) : base(options) { }
 
         public virtual DbSet<Measurement> Measurement { get; set; }
         public virtual DbSet<Room> Room { get; set; }
@@ -35,9 +29,9 @@ namespace WebService.Models
 
                 entity.Property(e => e.CarbonDioxide).HasColumnName("carbonDioxide");
 
-                entity.Property(e => e.DeviceId)
+                entity.Property(e => e.DeviceEui)
                     .IsRequired()
-                    .HasColumnName("deviceId")
+                    .HasColumnName("deviceEUI")
                     .HasMaxLength(16);
 
                 entity.Property(e => e.HumidityPercentage).HasColumnName("humidityPercentage");

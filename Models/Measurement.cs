@@ -11,6 +11,6 @@ namespace WebService.Models
         public int CarbonDioxide { get; set; }
         public double Temperature { get; set; }
         public int ServoPositionPercentage { get; set; }
-        public string DeviceId { get; set; }
+        public string DeviceEui { get; set; }
     }
 }
