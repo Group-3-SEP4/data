@@ -27,7 +27,7 @@ namespace WebService.Repository.DAO.Settings
                 entity.PpmMax = settings.PpmMax;
                 entity.PpmMin = settings.PpmMin;
                 entity.TemperatureSetpoint = settings.TemperatureSetpoint;
-                entity.LastUpdated = DateTime.Now;
+                entity.LastUpdated = DateTime.UtcNow;
                 entity.SettingsId = settings.SettingsId;
                 entity.SentToDevice = null;
                 context.Settings.Update(entity);

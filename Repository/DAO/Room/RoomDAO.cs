@@ -39,7 +39,7 @@ namespace WebService.Repository.DAO.Room
                 newSettings.TemperatureSetpoint = temperatureSetPoint;
                 newSettings.PpmMax = ppmMax;
                 newSettings.PpmMin = ppmMin;
-                newSettings.LastUpdated = DateTime.Now;
+                newSettings.LastUpdated = DateTime.UtcNow;
 
                 context.Settings.Add(newSettings);
                 context.SaveChanges();
