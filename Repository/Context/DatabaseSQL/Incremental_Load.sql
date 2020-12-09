@@ -1,4 +1,87 @@
-﻿--Clear the temporary table before loading new data
+﻿--********************************************************************************************
+--NEW ENTIY IN THE SOURCE DATABASE
+--********************************************************************************************
+delete from Staging.DeviceDim
+--New entity detection
+insert into Staging.DeviceDim(
+    DeviceEUI,
+    RoomID,
+    Name,
+    ValidFrom,
+    ValidTo
+)
+select Room.deviceEUI, Room.roomId, Room.name, GETDATE(), '9999-12-31'
+from dbo.Room
+where (
+                  roomId IN (((select roomId from dbo.Room )
+                              EXCEPT
+                              (select DW.DeviceDim.RoomID from DW.DeviceDim ))
+                             EXCEPT select DW.DeviceDim.RoomID from DW.DeviceDim where ValidTo <= GETDATE())
+              OR
+                  name in (((select name from dbo.Room)
+                            EXCEPT
+                            (select DW.DeviceDim.Name from DW.DeviceDim))
+                           EXCEPT select DW.DeviceDim.Name from DW.DeviceDim where ValidTo <= GETDATE())
+              OR
+                  deviceEUI in (((select deviceEUI from dbo.Room)
+                                 EXCEPT
+                                 (select DW.DeviceDim.deviceEUI from DW.DeviceDim))
+                                EXCEPT select DW.DeviceDim.DeviceEUI from DW.DeviceDim where ValidTo <= GETDATE())
+          )
+--must differenciate between old enities that have valid to no 9999
+
+--********************************************************************************************
+--AN ENTITY THAT CHANGED SINCE LAST TIME
+--********************************************************************************************
+--Changes in existing entity detection. I assume here that only name or deviceEUI can change
+insert into Staging.DeviceDim(
+    DeviceEUI,
+    RoomID,
+    Name,
+    ValidFrom,
+    ValidTo
+)
+select Room.deviceEUI, Room.roomId, Room.name, GETDATE(), '9999-12-31'
+from dbo.Room
+         inner join DW.DeviceDim on dbo.Room.roomId = DW.DeviceDim.RoomID
+where dbo.Room.name != DW.DeviceDim.Name AND ValidTo > GETDATE() OR dbo.Room.deviceEUI != DW.DeviceDim.DeviceEUI AND ValidTo > GETDATE()
+--must differenciate between old enities that have valid to no 9999
+
+--********************************************************************************************
+--UPDATE VALID TO DATE OF OLD ENTITIES
+--********************************************************************************************
+update DW.DeviceDim
+set ValidTo = GETDATE()
+where DW.DeviceDim.RoomID IN(
+    select dbo.Room.roomId
+    from dbo.Room
+             inner join DW.DeviceDim on dbo.Room.roomId = DW.DeviceDim.RoomID
+    where dbo.Room.name != DW.DeviceDim.Name AND ValidTo > GETDATE() OR dbo.Room.deviceEUI != DW.DeviceDim.DeviceEUI AND ValidTo > GETDATE()
+)
+--must differenciate between old enities that have valid to no 9999
+
+--********************************************************************************************
+--INSERTING THE UPDATED OR NEW ENTITIES ADDED ENTITIES INTO THE DATA WAREHOUSE
+--********************************************************************************************
+INSERT INTO DW.DeviceDim
+(DeviceEUI, RoomID, Name, ValidFrom, ValidTo)
+SELECT
+    stage.DeviceEUI,
+    stage.RoomID,
+    stage.Name,
+    stage.ValidFrom,
+    stage.ValidTo
+FROM Staging.DeviceDim stage;
+
+--Clears temporary table. Important
+delete from Staging.DeviceDim
+
+
+--********************************************************************************************
+--Incremental load of fact
+--********************************************************************************************
+
+--Clear the temporary table before loading new data
 DELETE FROM EnviormentDatabase.Staging.F_Measurement
 
 --Insert new data that arrived since the last data ware house update
