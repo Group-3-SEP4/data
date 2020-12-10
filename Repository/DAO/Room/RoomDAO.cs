@@ -14,48 +14,56 @@ namespace WebService.Repository.DAO.Room
         private int ppmMax;
         private float temperatureSetPoint;
 
-        public RoomDAO(EnviormentContext context)
-        {
+        public RoomDAO(EnviormentContext context) {
             this.context = context;
             this.ppmMin = 400;
             this.ppmMax = 5000;
             this.temperatureSetPoint = 18;
         }
 
-        public bool InitRoom(string deviceEUI) {
-            Context.Room roomForDevice = null;
+        public bool InitRoom(string deviceEUI)
+        {
+            Context.Measurement measurement = null;
             try
             {
-                roomForDevice = context.Room.AsEnumerable().Where(r => r.DeviceEui.Equals(deviceEUI)).Last();
+                measurement = context.Measurement.AsEnumerable().Where(r => r.DeviceEui.Equals(deviceEUI)).Last();
             }
             catch (InvalidOperationException e)
             {
             }
+
+            if (measurement != null) {
+                Context.Room roomForDevice = null;
             
-            if (roomForDevice != null)
-                return false;
-            else {
-                Context.Settings newSettings = new Context.Settings();
-                newSettings.TemperatureSetpoint = temperatureSetPoint;
-                newSettings.PpmMax = ppmMax;
-                newSettings.PpmMin = ppmMin;
-                newSettings.LastUpdated = DateTime.UtcNow;
+                try {
+                    roomForDevice = context.Room.AsEnumerable().Where(r => r.DeviceEui.Equals(deviceEUI)).Last();
+                }
+                catch (InvalidOperationException e) {
+                }
+            
+                if (roomForDevice == null){
+                    Context.Settings newSettings = new Context.Settings();
+                    newSettings.TemperatureSetpoint = temperatureSetPoint;
+                    newSettings.PpmMax = ppmMax;
+                    newSettings.PpmMin = ppmMin;
+                    newSettings.LastUpdated = DateTime.UtcNow;
 
-                context.Settings.Add(newSettings);
-                context.SaveChanges();
+                    context.Settings.Add(newSettings);
+                    context.SaveChanges();
 
-                Context.Room newRoom = new Context.Room();
-                newRoom.DeviceEui = deviceEUI;
-                newRoom.Name = "New device";
-                newRoom.SettingsId = newSettings.SettingsId;
-                context.Room.Add(newRoom);
-                context.SaveChanges();
+                    Context.Room newRoom = new Context.Room();
+                    newRoom.DeviceEui = deviceEUI;
+                    newRoom.Name = "New device";
+                    newRoom.SettingsId = newSettings.SettingsId;
+                    context.Room.Add(newRoom);
+                    context.SaveChanges();
+                }
                 return true;
             }
+            return false;
         }
 
-        public Context.Room GetRoom(string deviceEUI)
-        {
+        public Context.Room GetRoom(string deviceEUI) {
             return context.Room.Where(room => room.DeviceEui.Equals(deviceEUI)).Single();
         }
     }
