@@ -1,4 +1,16 @@
 ﻿--********************************************************************************************
+--UPDATE DELETED ENTITIES
+--********************************************************************************************
+update DW.DeviceDim
+set ValidTo = GETDATE()
+where DW.DeviceDim.DeviceDimKey IN(
+    select DeviceDimKey
+    from DW.DeviceDim
+             inner join dbo.Room on DW.DeviceDim.RoomID != dbo.Room.roomId
+    where dbo.Room.name = DW.DeviceDim.Name AND ValidTo = '9999-12-31' OR dbo.Room.deviceEUI = DW.DeviceDim.DeviceEUI AND ValidTo ='9999-12-31'
+)
+
+--********************************************************************************************
 --AN ENTITY THAT CHANGED SINCE LAST TIME
 --********************************************************************************************
 --Changes in existing entity detection. I assume here that only name or deviceEUI can change
