@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using WebService.Repository.Context;
+using WebService.Repository.Context.DatabaseSQL;
+using WebService.Repository.DAO.Fact_Measurement;
 using WebService.Repository.DAO.Measurement;
 using WebService.Repository.DAO.Room;
 using WebService.Repository.DAO.Settings;
@@ -12,6 +14,7 @@ namespace WebService.Repository
         ISettingsDAO settingsDAO;
         IRoomDAO roomDAO;
         IMeasurementDAO measurementDAO;
+        IFactMeasurementDao factMeasurementDao;
         private EnviormentContext _context;
 
         public DbRepository(EnviormentContext context) {
@@ -19,6 +22,7 @@ namespace WebService.Repository
             this.measurementDAO = new MeasurementDAO(context);
             this.settingsDAO = new SettingsDAO(context);
             this.roomDAO = new RoomDAO(context);
+            this.factMeasurementDao = new FactMeasurementDao(context);
         }
 
         public Measurement GetMeasurement(string deviceEUI) {
@@ -40,6 +44,11 @@ namespace WebService.Repository
         public Room GetRoom(string deviceEUI)
         {
             return roomDAO.GetRoom(deviceEUI);
+        }
+
+        public IQueryable<FMeasurement> GetOverview()
+        {
+            return factMeasurementDao.GetOverview();
         }
     }
 }
