@@ -1,5 +1,8 @@
 ﻿
+using System.Collections.Generic;
+using System.Linq;
 using WebService.Repository.Context;
+using WebService.Repository.Context.DatabaseSQL;
 
 namespace WebService.Repository
 {
@@ -10,5 +13,7 @@ namespace WebService.Repository
         Settings PostSettings(Settings settings);
         bool InitRoom(string deviceEUI);
         Room GetRoom(string deviceEUI);
+        List<FMeasurementOverview> GetOverviewToday(string deviceEUI);
+        List<FMeasurementOverview> GetOverviewLastWeek(string deviceEUI);
     }
 }
