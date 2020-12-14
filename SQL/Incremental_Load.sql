@@ -1,57 +1,61 @@
 ﻿--********************************************************************************************
 --UPDATE DELETED ENTITIES
 --********************************************************************************************
+delete from Staging.DeviceDim
+
 update DW.DeviceDim
 set ValidTo = GETDATE()
 where DW.DeviceDim.DeviceDimKey IN(
     select DeviceDimKey
     from DW.DeviceDim
              inner join dbo.Room on DW.DeviceDim.RoomID != dbo.Room.roomId
-    where dbo.Room.name = DW.DeviceDim.Name AND ValidTo = '9999-12-31' OR dbo.Room.deviceEUI = DW.DeviceDim.DeviceEUI AND ValidTo ='9999-12-31'
+    where dbo.Room.name = DW.DeviceDim.Name AND ValidTo = '9999-12-31' AND DW.DeviceDim.DeviceEUI not in(select distinct m.deviceEUI from dbo.Measurement m)
+       OR dbo.Room.deviceEUI = DW.DeviceDim.DeviceEUI AND ValidTo ='9999-12-31' AND DW.DeviceDim.DeviceEUI not in(select distinct m.deviceEUI from dbo.Measurement m)
+       OR dbo.Room.RoomId = DW.DeviceDim.RoomId AND ValidTo ='9999-12-31' AND DW.DeviceDim.DeviceEUI not in(select distinct m.deviceEUI from dbo.Measurement m)
 )
 
 --********************************************************************************************
 --AN ENTITY THAT CHANGED SINCE LAST TIME
 --********************************************************************************************
---Changes in existing entity detection. I assume here that only name or deviceEUI can change
+
 insert into Staging.DeviceDim(
     DeviceEUI,
     RoomID,
-    Name,
-    ValidFrom,
-    ValidTo
-)
-select Room.deviceEUI, Room.roomId, Room.name, GETDATE(), '9999-12-31'
+    Name)
+select Room.deviceEUI, Room.roomId, Room.name
 from dbo.Room
          inner join DW.DeviceDim on dbo.Room.roomId = DW.DeviceDim.RoomID
-where dbo.Room.deviceEUI != DW.DeviceDim.DeviceEUI AND ValidTo > GETDATE() OR dbo.Room.name != DW.DeviceDim.Name AND ValidTo > GETDATE()
+where dbo.Room.deviceEUI != DW.DeviceDim.DeviceEUI AND ValidTo > GETDATE()
+   OR dbo.Room.name != DW.DeviceDim.Name AND ValidTo > GETDATE()
+   OR dbo.Room.RoomId != DW.DeviceDim.RoomId AND ValidTo > GETDATE()
 
---must differenciate between old enities that have valid to no 9999
-
---********************************************************************************************
---UPDATE VALID TO DATE OF OLD ENTITIES
---********************************************************************************************
 update DW.DeviceDim
 set ValidTo = GETDATE()
 where DW.DeviceDim.RoomID IN(
     select dbo.Room.roomId
     from dbo.Room
              inner join DW.DeviceDim on dbo.Room.roomId = DW.DeviceDim.RoomID
-    where dbo.Room.name != DW.DeviceDim.Name AND ValidTo > GETDATE() OR dbo.Room.deviceEUI != DW.DeviceDim.DeviceEUI AND ValidTo > GETDATE()
+    where dbo.Room.name != DW.DeviceDim.Name AND ValidTo > GETDATE()
+       OR dbo.Room.deviceEUI != DW.DeviceDim.DeviceEUI AND ValidTo > GETDATE()
+       OR dbo.Room.deviceEUI != DW.DeviceDim.DeviceEUI AND ValidTo > GETDATE()
 )
---must differenciate between old enities that have valid to no 9999
 
---********************************************************************************************
---INSERTING THE UPDATED OR NEW ENTITIES ADDED ENTITIES INTO THE DATA WAREHOUSE
---********************************************************************************************
+UPDATE Staging.DeviceDim
+SET Name = 'No name'
+WHERE Name IS NULL
+
+UPDATE Staging.DeviceDim
+SET RoomID = -1
+WHERE RoomID IS NULL
+
 INSERT INTO DW.DeviceDim
 (DeviceEUI, RoomID, Name, ValidFrom, ValidTo)
 SELECT
     stage.DeviceEUI,
     stage.RoomID,
     stage.Name,
-    stage.ValidFrom,
-    stage.ValidTo
+    GETDATE(),
+    '9999-12-31'
 FROM Staging.DeviceDim stage;
 
 --Clears temporary table. Important
@@ -60,16 +64,15 @@ delete from Staging.DeviceDim
 --********************************************************************************************
 --NEW ENTIY IN THE SOURCE DATABASE
 --********************************************************************************************
+
 delete from Staging.DeviceDim
---New entity detection
+
 insert into Staging.DeviceDim(
     DeviceEUI,
     RoomID,
-    Name,
-    ValidFrom,
-    ValidTo
+    Name
 )
-select Room.deviceEUI, Room.roomId, Room.name, GETDATE(), '9999-12-31'
+select Room.deviceEUI, Room.roomId, Room.name
 from dbo.Room
 where (
                   roomId IN (((select roomId from dbo.Room )
@@ -87,56 +90,51 @@ where (
                                  (select DW.DeviceDim.deviceEUI from DW.DeviceDim))
                                 EXCEPT select DW.DeviceDim.DeviceEUI from DW.DeviceDim where ValidTo <= GETDATE())
           )
---must differenciate between old enities that have valid to no 9999
 
---********************************************************************************************
---INSERTING THE UPDATED OR NEW ENTITIES ADDED ENTITIES INTO THE DATA WAREHOUSE
---********************************************************************************************
+--Finds new unique device id's that are not in the data warehous and not added to staging in previous step
+INSERT INTO Staging.DeviceDim(
+    DeviceEUI,
+    RoomID,
+    Name)
+Select
+    distinct m.deviceEUI,
+             NULL,
+             NULL
+from EnviormentDatabase.dbo.Measurement m
+where m.DeviceEUI not in (
+    SELECT
+        distinct r.deviceEUI
+    FROM Staging.DeviceDim r) AND m.DeviceEUI not in (
+    select
+        DW.DeviceDim.deviceEUI
+    from DW.DeviceDim)
+
+UPDATE Staging.DeviceDim
+SET Name = 'No name'
+WHERE Name IS NULL
+
+UPDATE Staging.DeviceDim
+SET RoomID = -1
+WHERE RoomID IS NULL
+
 INSERT INTO DW.DeviceDim
 (DeviceEUI, RoomID, Name, ValidFrom, ValidTo)
 SELECT
     stage.DeviceEUI,
     stage.RoomID,
     stage.Name,
-    stage.ValidFrom,
-    stage.ValidTo
+    GETDATE(),
+    '9999-12-31'
 FROM Staging.DeviceDim stage;
 
 --Clears temporary table. Important
 delete from Staging.DeviceDim
 
 --********************************************************************************************
---Initial load for the fact table
+--Generate all new dates sine last update to insert into fact table
 --********************************************************************************************
---Clear the temporary table before loading new data
-DELETE FROM EnviormentDatabase.Staging.F_Measurement
-
---Insert new data that arrived since the last data ware house update
-INSERT INTO EnviormentDatabase.Staging.F_Measurement(
-    DeviceEUI,
-    Time,
-    Date,
-    HumidityPercentage,
-    CarbonDioxide,
-    Temperature,
-    ServoPosition
-)
-SELECT
-    m.deviceEUI,
-    FORMAT(m.timestamp, 'hh:mm'),
-    m.timestamp,
-    m.humidityPercentage,
-    m.carbonDioxide,
-    m.temperature,
-    m.servoPositionPercentage
-FROM EnviormentDatabase.dbo.Measurement m
-where m.timestamp > (SELECT TOP (1) DW.LastUpdated.Date
-                     FROM  DW.LastUpdated
-                     ORDER BY Date DESC);
-
---GET SOME DATES 
 SET NOCOUNT ON
-DECLARE @StartDate DATETIME = (SELECT TOP (1) DW.LastUpdated.Date FROM  DW.LastUpdated ORDER BY Date DESC);
+DECLARE @StartDate DATETIME = FORMAT((SELECT TOP (1) DW.LastUpdated.Date FROM  DW.LastUpdated ORDER BY Date DESC), 'yyyy-MM-dd');
 DECLARE @EndDate DATETIME = FORMAT(GETDATE(), 'yyyy-MM-dd')
 select @EndDate = dateadd(day,1,@enddate)
 WHILE @StartDate < @EndDate
@@ -156,23 +154,69 @@ WHILE @StartDate < @EndDate
             Year = YEAR(@StartDate),
             MonthName = DATENAME(month, @StartDate),
             WeekNumber = DATEPART(week, @StartDate)
-
+        where @StartDate not in (select DateDim.Date from DW.DateDim)
         SET @StartDate = DATEADD(dd, 1, @StartDate)
     END
 
+--********************************************************************************************
+--Incremental load for the fact table
+--********************************************************************************************
+--Clear the temporary table before loading new data
+DELETE FROM EnviormentDatabase.Staging.F_Measurement
 
---Look up keys in DW
+--Insert new data that arrived since the last data ware house update
+INSERT INTO EnviormentDatabase.Staging.F_Measurement(
+    DeviceEUI,
+    Time,
+    Date,
+    HumidityPercentage,
+    CarbonDioxide,
+    Temperature,
+    ServoPosition
+)
+SELECT
+    m.deviceEUI,
+    FORMAT(m.timestamp, 'HH:mm'),
+    m.timestamp,
+    m.humidityPercentage,
+    m.carbonDioxide,
+    m.temperature,
+    m.servoPositionPercentage
+FROM EnviormentDatabase.dbo.Measurement m
+where m.timestamp > (SELECT TOP (1) DW.LastUpdated.Date
+                     FROM  DW.LastUpdated
+                     ORDER BY Date DESC);
+
+--Cleansing the data of illegal values
+UPDATE Staging.F_Measurement
+SET Temperature = 0
+WHERE Temperature = 32767
+
+UPDATE Staging.F_Measurement
+SET CarbonDioxide = 0
+WHERE CarbonDioxide = 32767 OR CarbonDioxide < 0
+
+UPDATE Staging.F_Measurement
+SET HumidityPercentage = 0
+WHERE HumidityPercentage > 100 OR HumidityPercentage < 0
+
+UPDATE Staging.F_Measurement
+SET ServoPosition = 0
+WHERE ServoPosition > 100 OR ServoPosition < 0
+
+-- Extract Dimension keys
 UPDATE Staging.F_Measurement
 SET DeviceDimKey = (
     SELECT d.DeviceDimKey
     FROM DW.DeviceDim d
-    WHERE d.DeviceEUI = F_Measurement.DeviceEUI)
+    WHERE d.DeviceEUI = Staging.F_Measurement.DeviceEUI AND d.ValidTo = '9999-12-31')
 
 UPDATE Staging.F_Measurement
 SET DateDimKey = (
-    SELECT d.DateDimKey
+    SELECT top(1) d.DateDimKey
     FROM DW.DateDim d
-    WHERE d.Date = F_Measurement.Date)
+    WHERE d.Date = F_Measurement.Date
+)
 
 UPDATE Staging.F_Measurement
 SET TimeDimKey = (
@@ -180,7 +224,7 @@ SET TimeDimKey = (
     FROM DW.TimeDim t
     WHERE t.Time = F_Measurement.Time)
 
--- Populate the dw fact table using the temporary table
+-- Load Measurement fact
 INSERT INTO DW.F_Measurement
 (
     DeviceDimKey,
@@ -201,7 +245,11 @@ SELECT
     stage.ServoPosition
 FROM Staging.F_Measurement stage
 
--- Update "LastUpdated" table with new date
+delete from Staging.F_Measurement
+
+--********************************************************************************************
+--Update history of last update
+--********************************************************************************************
 INSERT INTO DW.LastUpdated
 (
     Date
