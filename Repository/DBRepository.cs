@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WebService.Repository.Context;
 using WebService.Repository.Context.DatabaseSQL;
@@ -46,9 +47,14 @@ namespace WebService.Repository
             return roomDAO.GetRoom(deviceEUI);
         }
 
-        public IQueryable<FMeasurement> GetOverview()
+        public List<FMeasurementOverview> GetOverviewToday(string deviceEUI)
         {
-            return factMeasurementDao.GetOverview();
+            return factMeasurementDao.GetOverviewToday(deviceEUI);
+        }
+        
+        public List<FMeasurementOverview> GetOverviewLastWeek(string deviceEUI)
+        {
+            return factMeasurementDao.GetOverviewLastWeek(deviceEUI);
         }
     }
 }

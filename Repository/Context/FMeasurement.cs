@@ -17,18 +17,5 @@ namespace WebService.Repository.Context.DatabaseSQL
         public virtual DateDim DateDimKeyNavigation { get; set; }
         public virtual DeviceDim DeviceDimKeyNavigation { get; set; }
         public virtual TimeDim TimeDimKeyNavigation { get; set; }
-
-        public class NightOverviewModel
-        {
-            public double tempMin { get; set; } 
-            public double tempAvg { get; set; } 
-            public double tempMax { get; set; } 
-            public double humiMin { get; set; } 
-            public double humiAvg { get; set; } 
-            public double humiMax { get; set; } 
-            public double co2Min { get; set; } 
-            public double co2Avg { get; set; } 
-            public double co2Max { get; set; }
-        }
     }
 }

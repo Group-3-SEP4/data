@@ -23,6 +23,8 @@ namespace WebService.Repository.Context.DatabaseSQL
         public virtual DbSet<Room> Room { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
         public virtual DbSet<TimeDim> TimeDim { get; set; }
+        
+        public virtual DbSet<FMeasurementOverview> FMeasurementOverview { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -204,6 +206,11 @@ namespace WebService.Repository.Context.DatabaseSQL
                 entity.ToTable("TimeDim", "DW");
 
                 entity.Property(e => e.Time).HasColumnType("time(0)");
+            });
+
+            modelBuilder.Entity<FMeasurementOverview>(entity =>
+            {
+                entity.HasNoKey();
             });
 
             OnModelCreatingPartial(modelBuilder);
