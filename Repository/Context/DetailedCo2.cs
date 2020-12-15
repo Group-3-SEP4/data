@@ -4,7 +4,7 @@ namespace WebService.Repository.DAO
 {
     public class DetailedCo2
     {
-        private DateTime timestamp;
-        private int value;
+        public DateTime timestamp { get; set; }
+        public int value { get; set; }
     }
 }

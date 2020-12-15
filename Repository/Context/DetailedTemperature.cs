@@ -1,8 +1,10 @@
-﻿namespace WebService.Repository.DAO
+﻿using System;
+
+namespace WebService.Repository.DAO
 {
     public class DetailedTemperature
     {
-        private String timestamp;
-        private double value;
+        public DateTime timestamp { get; set; }
+        public double value { get; set; }
     }
 }
