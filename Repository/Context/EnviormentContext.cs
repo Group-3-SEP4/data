@@ -25,6 +25,7 @@ namespace WebService.Repository.Context.DatabaseSQL
         public virtual DbSet<TimeDim> TimeDim { get; set; }
         
         public virtual DbSet<FMeasurementOverview> FMeasurementOverview { get; set; }
+        public virtual DbSet<HistoricalOverview> HistoricalOverview { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -209,6 +210,11 @@ namespace WebService.Repository.Context.DatabaseSQL
             });
 
             modelBuilder.Entity<FMeasurementOverview>(entity =>
+            {
+                entity.HasNoKey();
+            });
+
+            modelBuilder.Entity<HistoricalOverview>(entity =>
             {
                 entity.HasNoKey();
             });
