@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using WebService.Repository.DAO;
 
 namespace WebService.Repository.Context.DatabaseSQL
 {
@@ -26,6 +27,9 @@ namespace WebService.Repository.Context.DatabaseSQL
         
         public virtual DbSet<FMeasurementOverview> FMeasurementOverview { get; set; }
         public virtual DbSet<HistoricalOverview> HistoricalOverview { get; set; }
+        public virtual DbSet<DetailedCo2> DetailedCo2 { get; set; }
+        public virtual DbSet<DetailedTemperature> DetailedTemperature { get; set; }
+        public virtual DbSet<DetailedHumidity> DetailedHumidity { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -215,6 +219,21 @@ namespace WebService.Repository.Context.DatabaseSQL
             });
 
             modelBuilder.Entity<HistoricalOverview>(entity =>
+            {
+                entity.HasNoKey();
+            });
+
+            modelBuilder.Entity<DetailedTemperature>(entity =>
+            {
+                entity.HasNoKey();
+            });
+
+            modelBuilder.Entity<DetailedHumidity>(entity =>
+            {
+                entity.HasNoKey();
+            });
+
+            modelBuilder.Entity<DetailedCo2>(entity =>
             {
                 entity.HasNoKey();
             });
