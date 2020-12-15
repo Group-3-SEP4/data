@@ -26,11 +26,11 @@ namespace WebService.Repository.DAO.Historical
                 "INNER JOIN DW.DateDim d ON fm.DateDimKey = d.DateDimKey " +
                 "INNER JOIN DW.TimeDim t ON fm.TimeDimKey = t.TimeDimKey " +
                 "INNER JOIN DW.DeviceDim dv ON fm.DeviceDimKey = dv.DeviceDimKey " +
-                "WHERE dv.DeviceEUI = '0004A30B00219CB5' " +
-                "AND d.Date <= '2020-11-27' " +
-                "AND d.Date >= '2020-12-15' " +
+                "WHERE dv.DeviceEUI = {0} " +
+                "AND d.Date <= {1} " +
+                "AND d.Date >= {2} " +
                 "GROUP BY t.Hour, d.Date " +
-                "ORDER BY d.Date asc, t.Hour asc").ToList();
+                "ORDER BY d.Date asc, t.Hour asc", deviceEUI, validTo, validFrom).ToList();
 
             List<DetailedHumidity> detailedHumiditys = _context.DetailedHumidity.FromSqlRaw(
                 "SELECT " +
@@ -44,7 +44,7 @@ namespace WebService.Repository.DAO.Historical
                 "AND d.Date <= {1} " +
                 "AND d.Date >= {2} " +
                 "GROUP BY t.Hour, d.Date " +
-                "ORDER BY d.Date asc, t.Hour asc", deviceEUI, validFrom, validTo).ToList();
+                "ORDER BY d.Date asc, t.Hour asc", deviceEUI, validTo, validFrom).ToList();
 
             List<DetailedCo2> detailedCo2s = _context.DetailedCo2.FromSqlRaw(
                 "SELECT " +
@@ -58,7 +58,7 @@ namespace WebService.Repository.DAO.Historical
                 "AND d.Date <= {1} " +
                 "AND d.Date >= {2} " +
                 "GROUP BY t.Hour, d.Date " +
-                "ORDER BY d.Date asc, t.Hour asc ", deviceEUI, validFrom, validTo).ToList();
+                "ORDER BY d.Date asc, t.Hour asc ", deviceEUI, validTo, validFrom).ToList();
 
             DetailedMeasurements measurements = new DetailedMeasurements();
             measurements.detailedCo2List = detailedCo2s;
