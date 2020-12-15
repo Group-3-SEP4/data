@@ -49,6 +49,11 @@ namespace WebService.Repository
         {
             return roomDAO.GetRoom(deviceEUI);
         }
+        
+        public Room UpdateRoom(Room room)
+        {
+            return roomDAO.UpdateRoom(room);
+        }
 
         public List<FMeasurementOverview> GetOverviewToday(string deviceEUI)
         {

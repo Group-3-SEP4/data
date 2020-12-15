@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Linq;
-using WebService.Repository.Context;
 using WebService.Repository.Context.DatabaseSQL;
 
 namespace WebService.Repository.DAO.Room
@@ -66,6 +62,21 @@ namespace WebService.Repository.DAO.Room
 
         public Context.Room GetRoom(string deviceEUI) {
             return context.Room.Where(room => room.DeviceEui.Equals(deviceEUI)).Single();
+        }
+
+        public Context.Room UpdateRoom(Context.Room room)
+        {
+            
+            var entity = context.Room.FirstOrDefault(item => item.RoomId == room.RoomId);
+
+            if (entity != null)
+            {
+                entity.Name = room.Name;
+                context.Room.Update(entity);
+                context.SaveChanges();
+            }
+            Context.Room newRoom = context.Room.FirstOrDefault(item => item.RoomId == room.RoomId);
+            return newRoom;
         }
     }
 }

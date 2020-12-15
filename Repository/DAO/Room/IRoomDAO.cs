@@ -8,5 +8,6 @@ namespace WebService.Repository.DAO.Room
     {
         bool InitRoom(string deviceEUI);
         Context.Room GetRoom(string deviceEUI);
+        Context.Room UpdateRoom(Context.Room room);
     }
 }

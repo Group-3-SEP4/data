@@ -35,5 +35,11 @@ namespace WebService.Controllers
         public Room GetRoom([FromQuery(Name = "deviceEUI")] string deviceEUI) {
             return _repo.GetRoom(deviceEUI);
         }
+        
+        
+        [HttpPut]
+        public Room UpdateRoom(Room room) {
+            return _repo.UpdateRoom(room);
+        }
     }
 }

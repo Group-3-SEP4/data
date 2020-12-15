@@ -16,5 +16,6 @@ namespace WebService.Repository
         List<FMeasurementOverview> GetOverviewToday(string deviceEUI);
         List<FMeasurementOverview> GetOverviewLastWeek(string deviceEUI);
         List<HistoricalOverview> GetHistoricalOverview(string deviceEUI);
+        Room UpdateRoom(Room room);
     }
 }
