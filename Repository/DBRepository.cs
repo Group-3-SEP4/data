@@ -65,9 +65,9 @@ namespace WebService.Repository
             return factMeasurementDao.GetOverviewLastWeek(deviceEUI);
         }
 
-        public List<HistoricalOverview> GetHistoricalOverview(string deviceEUI)
+        public DetailedMeasurements GetHistoricalOverview(string deviceEUI, string validFrom, string validTo)
         {
-            return historicalMeasurementDao.GetHistoricalOverview(deviceEUI);
+            return historicalMeasurementDao.GetHistoricalOverviewCO2(deviceEUI, validFrom, validTo);
         }
     }
 }

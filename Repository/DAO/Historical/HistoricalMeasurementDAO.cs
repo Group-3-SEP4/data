@@ -16,37 +16,8 @@ namespace WebService.Repository.DAO.Historical
             _context = context;
         }
 
-        public List<HistoricalOverview> GetHistoricalOverview(string deviceEUI)
+        public DetailedMeasurements GetHistoricalOverviewCO2(string deviceEUI, string validFrom, string validTo)
         {
-            List<DetailedCo2> detailedCo2s = _context.DetailedCo2.FromSqlRaw(
-                "SELECT " +
-                "DATEADD(HOUR, t.Hour, CAST(d.Date AS DATETIME)) AS timestamp, " +
-                "AVG(fm.CarbonDioxide) AS value " +
-                "FROM DW.F_Measurement fm " +
-                "INNER JOIN DW.DateDim d ON fm.DateDimKey = d.DateDimKey " +
-                "INNER JOIN DW.TimeDim t ON fm.TimeDimKey = t.TimeDimKey " +
-                "INNER JOIN DW.DeviceDim dv ON fm.DeviceDimKey = dv.DeviceDimKey " +
-                "WHERE dv.DeviceEUI = '0004A30B00219CB5' " +
-                "AND d.Date <= '2020-12-15' " +
-                "AND d.Date >= '2020-11-05' " +
-                "GROUP BY t.Hour, d.Date " +
-                "ORDER BY d.Date asc, t.Hour asc ").ToList();
-            
-            List<DetailedHumidity> detailedHumiditys = _context.DetailedHumidity.FromSqlRaw(
-                "SELECT " +
-                "DATEADD(HOUR, t.Hour, CAST(d.Date AS DATETIME)) AS timestamp, " +
-                "AVG(fm.HumidityPercentage) AS value " +
-                "FROM DW.F_Measurement fm " +
-                "INNER JOIN DW.DateDim d ON fm.DateDimKey = d.DateDimKey " +
-                "INNER JOIN DW.TimeDim t ON fm.TimeDimKey = t.TimeDimKey " +
-                "INNER JOIN DW.DeviceDim dv ON fm.DeviceDimKey = dv.DeviceDimKey " +
-                "WHERE dv.DeviceEUI = '0004A30B00219CB5' " +
-                "AND d.Date <= '2020-12-15' " +
-                "AND d.Date >= '2020-12-07' " +
-                "GROUP BY t.Hour, d.Date " +
-                "ORDER BY d.Date asc, t.Hour asc").ToList();
-            
-
             List<DetailedTemperature> detailedTemperatures = _context.DetailedTemperature.FromSqlRaw(
                 "SELECT " +
                 "DATEADD(HOUR, t.Hour, CAST(d.Date AS DATETIME)) AS timestamp, " +
@@ -55,19 +26,46 @@ namespace WebService.Repository.DAO.Historical
                 "INNER JOIN DW.DateDim d ON fm.DateDimKey = d.DateDimKey " +
                 "INNER JOIN DW.TimeDim t ON fm.TimeDimKey = t.TimeDimKey " +
                 "INNER JOIN DW.DeviceDim dv ON fm.DeviceDimKey = dv.DeviceDimKey " +
-                "WHERE dv.DeviceEUI = '0004A30B00219CB5' " +
-                "AND d.Date <= '2020-12-15' " +
-                "AND d.Date >= '2020-12-07' " +
+                "WHERE dv.DeviceEUI = {0} " +
+                "AND d.Date <= {1} " +
+                "AND d.Date >= {2} " +
                 "GROUP BY t.Hour, d.Date " +
-                "ORDER BY d.Date asc, t.Hour asc").ToList();
+                "ORDER BY d.Date asc, t.Hour asc", deviceEUI, validTo, validFrom).ToList();
+
+            List<DetailedHumidity> detailedHumiditys = _context.DetailedHumidity.FromSqlRaw(
+                "SELECT " +
+                "DATEADD(HOUR, t.Hour, CAST(d.Date AS DATETIME)) AS timestamp, " +
+                "AVG(fm.HumidityPercentage) AS value " +
+                "FROM DW.F_Measurement fm " +
+                "INNER JOIN DW.DateDim d ON fm.DateDimKey = d.DateDimKey " +
+                "INNER JOIN DW.TimeDim t ON fm.TimeDimKey = t.TimeDimKey " +
+                "INNER JOIN DW.DeviceDim dv ON fm.DeviceDimKey = dv.DeviceDimKey " +
+                "WHERE dv.DeviceEUI = {0} " +
+                "AND d.Date <= {1} " +
+                "AND d.Date >= {2} " +
+                "GROUP BY t.Hour, d.Date " +
+                "ORDER BY d.Date asc, t.Hour asc", deviceEUI, validTo, validFrom).ToList();
+
+            List<DetailedCo2> detailedCo2s = _context.DetailedCo2.FromSqlRaw(
+                "SELECT " +
+                "DATEADD(HOUR, t.Hour, CAST(d.Date AS DATETIME)) AS timestamp, " +
+                "AVG(fm.CarbonDioxide) AS value " +
+                "FROM DW.F_Measurement fm " +
+                "INNER JOIN DW.DateDim d ON fm.DateDimKey = d.DateDimKey " +
+                "INNER JOIN DW.TimeDim t ON fm.TimeDimKey = t.TimeDimKey " +
+                "INNER JOIN DW.DeviceDim dv ON fm.DeviceDimKey = dv.DeviceDimKey " +
+                "WHERE dv.DeviceEUI = {0} " +
+                "AND d.Date <= {1} " +
+                "AND d.Date >= {2} " +
+                "GROUP BY t.Hour, d.Date " +
+                "ORDER BY d.Date asc, t.Hour asc ", deviceEUI, validTo, validFrom).ToList();
+
             DetailedMeasurements measurements = new DetailedMeasurements();
             measurements.detailedCo2List = detailedCo2s;
             measurements.detailedHumidityList = detailedHumiditys;
             measurements.detailedTemperatureList = detailedTemperatures;
-            
-            Console.Write(5555);
 
-            return null;
+            return measurements;
         }
     }
 }
