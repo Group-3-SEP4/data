@@ -5,6 +5,6 @@ namespace WebService.Repository.DAO.Historical
 {
     public interface IHistoricalMeasurementDAO
     {
-        DetailedMeasurements GetHistoricalOverviewCO2(string deviceEUI, string validFrom, string validTo);
+        DetailedMeasurements GetHistoricalOverview(string deviceEUI, string validFrom, string validTo);
     }
 }

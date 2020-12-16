@@ -67,7 +67,7 @@ namespace WebService.Repository
 
         public DetailedMeasurements GetHistoricalOverview(string deviceEUI, string validFrom, string validTo)
         {
-            return historicalMeasurementDao.GetHistoricalOverviewCO2(deviceEUI, validFrom, validTo);
+            return historicalMeasurementDao.GetHistoricalOverview(deviceEUI, validFrom, validTo);
         }
     }
 }
