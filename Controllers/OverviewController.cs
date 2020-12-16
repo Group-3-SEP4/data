@@ -25,16 +25,39 @@ namespace WebService.Controllers
         /// This method returns all measurements needed for the night overview.
         /// </summary>
         /// <returns> Object of measurement that contains temperature, humidity, co2, and servo position</returns>
-        [HttpGet("Today")]
-        public List<OverviewModel> GetNightOverview([FromQuery(Name = "deviceEUI")] string deviceEUI)
+        /// <summary>
+        /// This method returns all measurements needed for the night overview.
+        /// </summary>
+        /// <returns> Object of measurement that contains temperature, humidity, co2, and servo position</returns>
+        [HttpGet]
+        public ActionResult MyGetNightOverview([FromQuery(Name = "deviceEUI")] string deviceEUI)
         {
-            return _repo.GetOverviewToday(deviceEUI);
-        }
+            OverviewModel nightOverview = _repo.GetOverviewToday(deviceEUI).First();
+            OverviewModel weekOverview = _repo.GetOverviewLastWeek(deviceEUI).First();
 
-        [HttpGet("LastWeek")]
-        public List<OverviewModel> GetLastWeekOverview([FromQuery(Name = "deviceEUI")] string deviceEUI)
-        {
-            return _repo.GetOverviewLastWeek(deviceEUI);
+            var overview = new
+            {
+                tempMin = nightOverview.tempMin,
+                tempMax = nightOverview.tempMax,
+                tempAvg = nightOverview.tempAvg,
+                humiMin = nightOverview.humiMin,
+                humiMax = nightOverview.humiMax,
+                humiAvg = nightOverview.humiAvg,
+                co2Min = nightOverview.co2Min,
+                co2Max = nightOverview.co2Max,
+                co2Avg = nightOverview.co2Avg,
+                tempMin7days = weekOverview.tempMin,
+                tempMax7days = weekOverview.tempMax,
+                tempAvg7days = weekOverview.tempAvg,
+                humiMin7days = weekOverview.humiMin,
+                humiMax7days = weekOverview.humiMax,
+                humiAvg7days = weekOverview.humiAvg,
+                co2Min7days = weekOverview.co2Min,
+                co2Max7days = weekOverview.co2Max,
+                co2Avg7days = weekOverview.co2Avg
+            };
+
+            return Ok(overview);
         }
     }
 }
