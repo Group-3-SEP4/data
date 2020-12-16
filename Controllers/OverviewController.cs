@@ -12,11 +12,11 @@ namespace WebService.Controllers
     /// </summary>
     [ApiController]
     [Route("[controller]")]
-    public class NightOverviewController : ControllerBase
+    public class OverviewController : ControllerBase
     {
         private readonly IDbRepository _repo;
 
-        public NightOverviewController(IDbRepository repo)
+        public OverviewController(IDbRepository repo)
         {
             _repo = repo;
         }
@@ -26,13 +26,13 @@ namespace WebService.Controllers
         /// </summary>
         /// <returns> Object of measurement that contains temperature, humidity, co2, and servo position</returns>
         [HttpGet("Today")]
-        public List<FMeasurementOverview> GetNightOverview([FromQuery(Name = "deviceEUI")] string deviceEUI)
+        public List<OverviewModel> GetNightOverview([FromQuery(Name = "deviceEUI")] string deviceEUI)
         {
             return _repo.GetOverviewToday(deviceEUI);
         }
 
         [HttpGet("LastWeek")]
-        public List<FMeasurementOverview> GetLastWeekOverview([FromQuery(Name = "deviceEUI")] string deviceEUI)
+        public List<OverviewModel> GetLastWeekOverview([FromQuery(Name = "deviceEUI")] string deviceEUI)
         {
             return _repo.GetOverviewLastWeek(deviceEUI);
         }

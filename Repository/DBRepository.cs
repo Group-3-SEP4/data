@@ -16,16 +16,16 @@ namespace WebService.Repository
         ISettingsDAO settingsDAO;
         IRoomDAO roomDAO;
         IMeasurementDAO measurementDAO;
-        IFactMeasurementDao factMeasurementDao;
+        IOverviewDAO _overviewDao;
         private IHistoricalMeasurementDAO historicalMeasurementDao;
-        private EnviormentContext _context;
+        private EnvironmentContext _context;
 
-        public DbRepository(EnviormentContext context) {
+        public DbRepository(EnvironmentContext context) {
             _context = context;
             this.measurementDAO = new MeasurementDAO(context);
             this.settingsDAO = new SettingsDAO(context);
             this.roomDAO = new RoomDAO(context);
-            this.factMeasurementDao = new FactMeasurementDao(context);
+            this._overviewDao = new OverviewDao(context);
             this.historicalMeasurementDao = new HistoricalMeasurementDAO(context);
         }
 
@@ -55,19 +55,19 @@ namespace WebService.Repository
             return roomDAO.UpdateRoom(room);
         }
 
-        public List<FMeasurementOverview> GetOverviewToday(string deviceEUI)
+        public List<OverviewModel> GetOverviewToday(string deviceEUI)
         {
-            return factMeasurementDao.GetOverviewToday(deviceEUI);
+            return _overviewDao.GetOverviewToday(deviceEUI);
         }
         
-        public List<FMeasurementOverview> GetOverviewLastWeek(string deviceEUI)
+        public List<OverviewModel> GetOverviewLastWeek(string deviceEUI)
         {
-            return factMeasurementDao.GetOverviewLastWeek(deviceEUI);
+            return _overviewDao.GetOverviewLastWeek(deviceEUI);
         }
 
         public DetailedMeasurements GetHistoricalOverview(string deviceEUI, string validFrom, string validTo)
         {
-            return historicalMeasurementDao.GetHistoricalOverviewCO2(deviceEUI, validFrom, validTo);
+            return historicalMeasurementDao.GetHistoricalOverview(deviceEUI, validFrom, validTo);
         }
     }
 }

@@ -6,12 +6,12 @@ namespace WebService.Repository.DAO.Room
 {
     public class RoomDAO : IRoomDAO
     {
-        private EnviormentContext context;
+        private EnvironmentContext context;
         private int ppmMin;
         private int ppmMax;
         private float temperatureSetPoint;
 
-        public RoomDAO(EnviormentContext context) {
+        public RoomDAO(EnvironmentContext context) {
             this.context = context;
             this.ppmMin = 400;
             this.ppmMax = 5000;

@@ -29,7 +29,7 @@ namespace WebService
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-            services.AddDbContext<EnviormentContext>(options =>
+            services.AddDbContext<EnvironmentContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EnvironmentDatabase")));
             services.AddControllers();
             services.AddScoped<IDbRepository, DbRepository>();

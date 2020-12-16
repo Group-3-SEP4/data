@@ -9,14 +9,14 @@ namespace WebService.Repository.DAO.Historical
 {
     public class HistoricalMeasurementDAO : IHistoricalMeasurementDAO
     {
-        private EnviormentContext _context;
+        private EnvironmentContext _context;
 
-        public HistoricalMeasurementDAO(EnviormentContext context)
+        public HistoricalMeasurementDAO(EnvironmentContext context)
         {
             _context = context;
         }
 
-        public DetailedMeasurements GetHistoricalOverviewCO2(string deviceEUI, string validFrom, string validTo)
+        public DetailedMeasurements GetHistoricalOverview(string deviceEUI, string validFrom, string validTo)
         {
             List<DetailedTemperature> detailedTemperatures = _context.DetailedTemperature.FromSqlRaw(
                 "SELECT " +

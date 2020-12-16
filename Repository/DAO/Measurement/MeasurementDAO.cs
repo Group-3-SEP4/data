@@ -8,9 +8,9 @@ namespace WebService.Repository.DAO.Measurement
 {
     public class MeasurementDAO : IMeasurementDAO
     {
-        private EnviormentContext context;
+        private EnvironmentContext context;
 
-        public MeasurementDAO(EnviormentContext context)
+        public MeasurementDAO(EnvironmentContext context)
         {
             this.context = context;
         }

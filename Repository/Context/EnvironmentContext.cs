@@ -5,13 +5,13 @@ using WebService.Repository.DAO;
 
 namespace WebService.Repository.Context.DatabaseSQL
 {
-    public partial class EnviormentContext : DbContext
+    public partial class EnvironmentContext : DbContext
     {
-        public EnviormentContext()
+        public EnvironmentContext()
         {
         }
 
-        public EnviormentContext(DbContextOptions<EnviormentContext> options)
+        public EnvironmentContext(DbContextOptions<EnvironmentContext> options)
             : base(options)
         {
         }
@@ -20,7 +20,7 @@ namespace WebService.Repository.Context.DatabaseSQL
         public virtual DbSet<Room> Room { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
         
-        public virtual DbSet<FMeasurementOverview> FMeasurementOverview { get; set; }
+        public virtual DbSet<OverviewModel> OverviewModel { get; set; }
         public virtual DbSet<DetailedCo2> DetailedCo2 { get; set; }
         public virtual DbSet<DetailedTemperature> DetailedTemperature { get; set; }
         public virtual DbSet<DetailedHumidity> DetailedHumidity { get; set; }
@@ -101,7 +101,7 @@ namespace WebService.Repository.Context.DatabaseSQL
                 entity.Property(e => e.TemperatureSetpoint).HasColumnName("temperatureSetpoint");
             });
 
-            modelBuilder.Entity<FMeasurementOverview>(entity =>
+            modelBuilder.Entity<OverviewModel>(entity =>
             {
                 entity.HasNoKey();
             });

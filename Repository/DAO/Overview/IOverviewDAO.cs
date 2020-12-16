@@ -7,10 +7,10 @@ using WebService.Repository.Context.DatabaseSQL;
 
 namespace WebService.Repository.DAO.Fact_Measurement
 {
-    interface IFactMeasurementDao
+    interface IOverviewDAO
     {
-        List<FMeasurementOverview> GetOverviewToday(string deviceEUI);
+        List<OverviewModel> GetOverviewToday(string deviceEUI);
         
-        List<FMeasurementOverview> GetOverviewLastWeek(string deviceEUI);
+        List<OverviewModel> GetOverviewLastWeek(string deviceEUI);
     }
 }

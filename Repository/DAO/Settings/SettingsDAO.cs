@@ -7,9 +7,9 @@ namespace WebService.Repository.DAO.Settings
 {
     public class SettingsDAO : ISettingsDAO
     {
-        private EnviormentContext context;
+        private EnvironmentContext context;
 
-        public SettingsDAO(EnviormentContext context)
+        public SettingsDAO(EnvironmentContext context)
         {
             this.context = context;
         }

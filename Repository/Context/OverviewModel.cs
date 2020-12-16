@@ -1,6 +1,6 @@
 ﻿namespace WebService.Repository.Context
 {
-    public class FMeasurementOverview
+    public class OverviewModel
     {
         public double tempMin { get; set; } 
         public double tempAvg { get; set; } 

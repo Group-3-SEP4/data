@@ -8,18 +8,18 @@ using WebService.Repository.Context.DatabaseSQL;
 
 namespace WebService.Repository.DAO.Fact_Measurement
 {
-    public class FactMeasurementDao : IFactMeasurementDao
+    public class OverviewDao : IOverviewDAO
     {
-        private EnviormentContext _context;
+        private EnvironmentContext _context;
 
-        public FactMeasurementDao(EnviormentContext context)
+        public OverviewDao(EnvironmentContext context)
         {
             _context = context;
         }
         
-        public List<FMeasurementOverview> GetOverviewToday(string deviceEUI)
+        public List<OverviewModel> GetOverviewToday(string deviceEUI)
         {
-            return _context.FMeasurementOverview.FromSqlRaw("SELECT" +
+            return _context.OverviewModel.FromSqlRaw("SELECT" +
                                           " MIN(fm.CarbonDioxide) AS co2Min, AVG(fm.CarbonDioxide) AS co2Avg, MAX(fm.CarbonDioxide) AS co2Max," +
                                           " MIN(fm.HumidityPercentage) AS humiMin, AVG(fm.HumidityPercentage) AS humiAvg, MAX(fm.HumidityPercentage) AS humiMax," +
                                           " MIN(fm.Temperature) AS tempMin, AVG(fm.Temperature) AS tempAvg, MAX(fm.Temperature) AS tempMax" +
@@ -33,9 +33,9 @@ namespace WebService.Repository.DAO.Fact_Measurement
                                           " AND NOT fm.HumidityPercentage = 0", deviceEUI).ToList();
         }
 
-        public List<FMeasurementOverview> GetOverviewLastWeek(string deviceEUI)
+        public List<OverviewModel> GetOverviewLastWeek(string deviceEUI)
         {
-            return _context.FMeasurementOverview.FromSqlRaw("SELECT" + 
+            return _context.OverviewModel.FromSqlRaw("SELECT" + 
                                           " MIN(fm.CarbonDioxide) AS co2Min, AVG(fm.CarbonDioxide) AS co2Avg, MAX(fm.CarbonDioxide) AS co2Max," +
                                           " MIN(fm.HumidityPercentage) AS humiMin, AVG(fm.HumidityPercentage) AS humiAvg, MAX(fm.HumidityPercentage) AS humiMax," +
                                           " MIN(fm.Temperature) AS tempMin, AVG(fm.Temperature) AS tempAvg, MAX(fm.Temperature) AS tempMax" +
