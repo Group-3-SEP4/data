@@ -17,11 +17,9 @@ namespace WebService.Controllers
         }
 
         [HttpGet]
-        public DetailedMeasurements GetHistoricalOverview([FromQuery(Name = "deviceEUI")] string deviceEUI
-            , [FromQuery(Name = "validFrom")] string validFrom
-            , [FromQuery(Name = "validTo")] string validTo)
+        public List<HistoricalOverview> GetHistoricalOverview([FromQuery(Name = "deviceEUI")] string deviceEUI)
         {
-            return _repo.GetHistoricalOverview(deviceEUI, validFrom, validTo);
+            return _repo.GetHistoricalOverview(deviceEUI);
         }
     }
 }
