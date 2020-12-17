@@ -1,7 +1,4 @@
-﻿using WebService.Repository.Context;
-
-
-
+﻿
 namespace WebService.Repository.DAO.Room
 {
     interface IRoomDAO

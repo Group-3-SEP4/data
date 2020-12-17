@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebService.Repository;
 using WebService.Repository.Context;
-using WebService.Repository.Context.DatabaseSQL;
 
 namespace WebService.Controllers
 {
     /// <summary>
-    /// This is the controller for getting or posting data related to measurements.
+    /// This controller is for obtaining overview information for the night overview functionality 
     /// </summary>
     [ApiController]
     [Route("[controller]")]
@@ -22,15 +20,13 @@ namespace WebService.Controllers
         }
 
         /// <summary>
-        /// This method returns all measurements needed for the night overview.
+        /// This method gets the overview of the night and week for the night overview page on android device
+        /// Specifically gets the avg, min and max of both last day and week
         /// </summary>
-        /// <returns> Object of measurement that contains temperature, humidity, co2, and servo position</returns>
-        /// <summary>
-        /// This method returns all measurements needed for the night overview.
-        /// </summary>
-        /// <returns> Object of measurement that contains temperature, humidity, co2, and servo position</returns>
+        /// <param name="deviceEUI"></param>
+        /// <returns>An anonymous object that holds both values for today and past week</returns>
         [HttpGet]
-        public ActionResult MyGetNightOverview([FromQuery(Name = "deviceEUI")] string deviceEUI)
+        public ActionResult GetOverview([FromQuery(Name = "deviceEUI")] string deviceEUI)
         {
             OverviewModel nightOverview = _repo.GetOverviewToday(deviceEUI).First();
             OverviewModel weekOverview = _repo.GetOverviewLastWeek(deviceEUI).First();
