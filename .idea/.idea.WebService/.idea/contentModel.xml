@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Anders\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Anders\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_WebService.986327222.00" t="ExcludeRecursive" />
+    <e p="F:\GitHub\data" t="IncludeRecursive">
+      <e p=".gitignore" t="Include" />
+      <e p="appsettings.Development.json" t="Include" />
+      <e p="appsettings.json" t="Include" />
+      <e p="azure-pipelines.yml" t="Include" />
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="Controllers" t="Include">
+        <e p="MeasurementsController.cs" t="Include" />
+        <e p="RoomsController.cs" t="Include" />
+        <e p="SettingsController.cs" t="Include" />
+      </e>
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="netcoreapp3.1" t="Include">
+            <e p="WebService.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Program.cs" t="Include" />
+      <e p="Properties" t="Include">
+        <e p="launchSettings.json" t="Include" />
+        <e p="ServiceDependencies" t="Include">
+          <e p="RokasAPI - Web Deploy" t="Include">
+            <e p="profile.arm.json" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="README.md" t="Include" />
+      <e p="Repository" t="Include">
+        <e p="Context" t="Include">
+          <e p="DatabaseSQL" t="Include">
+            <e p="CreateStageAndDWTables_SQLCode.sql" t="Include" />
+            <e p="ETL_SQLCode.sql" t="Include" />
+            <e p="Incremental_Load.sql" t="Include" />
+            <e p="SourceDatabase_SQLCode.sql" t="Include" />
+          </e>
+          <e p="EnviormentContext.cs" t="Include" />
+          <e p="Measurement.cs" t="Include" />
+          <e p="Room.cs" t="Include" />
+          <e p="Settings.cs" t="Include" />
+        </e>
+        <e p="DAO" t="Include">
+          <e p="Measurement" t="Include">
+            <e p="IMeasurementDAO.cs" t="Include" />
+            <e p="MeasurementDAO.cs" t="Include" />
+          </e>
+          <e p="Room" t="Include">
+            <e p="IRoomDAO.cs" t="Include" />
+            <e p="RoomDAO.cs" t="Include" />
+          </e>
+          <e p="Settings" t="Include">
+            <e p="ISettingsDAO.cs" t="Include" />
+            <e p="SettingsDAO.cs" t="Include" />
+          </e>
+        </e>
+        <e p="DBRepository.cs" t="Include" />
+        <e p="IDBRepository.cs" t="Include" />
+      </e>
+      <e p="Startup.cs" t="Include" />
+      <e p="WebService" t="Include">
+        <e p="WebService" t="Include">
+          <e p="obj" t="Include">
+            <e p="project.packagespec.json" t="Include" />
+            <e p="rider.project.restore.info" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="WebService.csproj" t="IncludeRecursive" />
+      <e p="WebService.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>
