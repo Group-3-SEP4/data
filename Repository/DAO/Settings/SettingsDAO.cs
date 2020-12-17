@@ -33,8 +33,8 @@ namespace WebService.Repository.DAO.Settings
                 context.Settings.Update(entity);
                 context.SaveChanges();
             }
-            Context.Settings student = context.Settings.FirstOrDefault(item => item.SettingsId == settings.SettingsId);
-            return student;
+            Context.Settings updatedSettings = context.Settings.FirstOrDefault(item => item.SettingsId == settings.SettingsId);
+            return updatedSettings;
         }
     }
 }
