@@ -28,8 +28,8 @@ namespace WebService.Controllers
         [HttpGet]
         public ActionResult GetOverview([FromQuery(Name = "deviceEUI")] string deviceEUI)
         {
-            OverviewModel nightOverview = _repo.GetOverviewToday(deviceEUI).First();
-            OverviewModel weekOverview = _repo.GetOverviewLastWeek(deviceEUI).First();
+            OverviewModel nightOverview = _repo.GetOverviewToday(deviceEUI);
+            OverviewModel weekOverview = _repo.GetOverviewLastWeek(deviceEUI);
 
             var overview = new
             {

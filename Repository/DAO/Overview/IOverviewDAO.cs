@@ -5,8 +5,8 @@ namespace WebService.Repository.DAO.Fact_Measurement
 {
     interface IOverviewDAO
     {
-        List<OverviewModel> GetOverviewToday(string deviceEUI);
+        OverviewModel GetOverviewToday(string deviceEUI);
         
-        List<OverviewModel> GetOverviewLastWeek(string deviceEUI);
+        OverviewModel GetOverviewLastWeek(string deviceEUI);
     }
 }

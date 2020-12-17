@@ -10,8 +10,8 @@ namespace WebService.Repository
         Settings PostSettings(Settings settings);
         bool InitRoom(string deviceEUI);
         Room GetRoom(string deviceEUI);
-        List<OverviewModel> GetOverviewToday(string deviceEUI);
-        List<OverviewModel> GetOverviewLastWeek(string deviceEUI);
+        OverviewModel GetOverviewToday(string deviceEUI);
+        OverviewModel GetOverviewLastWeek(string deviceEUI);
         DetailedMeasurements GetHistoricalOverview(string deviceEUI, string validFrom, string validTo);
         Room UpdateRoom(Room room);
     }

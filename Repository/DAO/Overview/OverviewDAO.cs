@@ -15,7 +15,7 @@ namespace WebService.Repository.DAO.Fact_Measurement
             _context = context;
         }
         
-        public List<OverviewModel> GetOverviewToday(string deviceEUI)
+        public OverviewModel GetOverviewToday(string deviceEUI)
         {
             return _context.OverviewModel.FromSqlRaw(
                 "SELECT" +
@@ -29,10 +29,10 @@ namespace WebService.Repository.DAO.Fact_Measurement
                 " AND dv.DeviceEUI = " +
                 "{0}" +
                 " AND NOT fm.Temperature = 0" +
-                " AND NOT fm.HumidityPercentage = 0", deviceEUI).ToList();
+                " AND NOT fm.HumidityPercentage = 0", deviceEUI).First();
         }
 
-        public List<OverviewModel> GetOverviewLastWeek(string deviceEUI)
+        public OverviewModel GetOverviewLastWeek(string deviceEUI)
         {
             return _context.OverviewModel.FromSqlRaw("SELECT" + 
                                           " MIN(fm.CarbonDioxide) AS co2Min, AVG(CAST(fm.CarbonDioxide AS FLOAT)) AS co2Avg, MAX(fm.CarbonDioxide) AS co2Max," +
@@ -45,7 +45,7 @@ namespace WebService.Repository.DAO.Fact_Measurement
                                           " AND dv.DeviceEUI = " +
                                           "{0}" +
                                           " AND NOT fm.Temperature = 0" +
-                                          " AND NOT fm.HumidityPercentage = 0", deviceEUI).ToList();
+                                          " AND NOT fm.HumidityPercentage = 0", deviceEUI).First();
         }
     }
 }

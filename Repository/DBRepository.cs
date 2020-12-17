@@ -53,12 +53,12 @@ namespace WebService.Repository
             return roomDAO.UpdateRoom(room);
         }
 
-        public List<OverviewModel> GetOverviewToday(string deviceEUI)
+        public OverviewModel GetOverviewToday(string deviceEUI)
         {
             return _overviewDao.GetOverviewToday(deviceEUI);
         }
         
-        public List<OverviewModel> GetOverviewLastWeek(string deviceEUI)
+        public OverviewModel GetOverviewLastWeek(string deviceEUI)
         {
             return _overviewDao.GetOverviewLastWeek(deviceEUI);
         }
