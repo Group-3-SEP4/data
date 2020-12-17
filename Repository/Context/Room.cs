@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace WebService.Repository.Context
 {
     public partial class Room

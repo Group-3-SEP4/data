@@ -36,7 +36,11 @@ namespace WebService.Controllers
             return _repo.GetRoom(deviceEUI);
         }
         
-        
+        /// <summary>
+        /// This method is for updating the name of the room. THe whole room has to be passed
+        /// </summary>
+        /// <param name="room"></param>
+        /// <returns>The updated entity of the room</returns>
         [HttpPut]
         public Room UpdateRoom(Room room) {
             return _repo.UpdateRoom(room);

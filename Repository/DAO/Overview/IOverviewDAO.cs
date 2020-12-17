@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using WebService.Repository.Context;
-using WebService.Repository.Context.DatabaseSQL;
 
 namespace WebService.Repository.DAO.Fact_Measurement
 {

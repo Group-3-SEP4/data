@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using WebService.Repository.Context;
+﻿using WebService.Repository.Context;
 
 namespace WebService.Repository.DAO.Historical
 {

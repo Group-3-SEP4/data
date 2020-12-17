@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebService.Repository;
-using WebService.Repository.Context;
 using WebService.Repository.Context.DatabaseSQL;
 
 namespace WebService
@@ -15,11 +14,6 @@ namespace WebService
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            //Script for entityFramework 
-            //Go to tools -> nuget packagee manager -> package manager console
-            //Project must be built
-            //Scaffold-DbContext "Server=tcp:enviorment-server.database.windows.net,1433;Initial Catalog=EnviormentDatabase;Persist Security Info=False;User ID=rokasbarasa1;Password=Augis123*;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Repository\Context\DatabaseSQL -Context EnviormentContext
-
         }
 
         public IConfiguration Configuration { get; }
